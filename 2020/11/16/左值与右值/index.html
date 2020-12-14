@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"sidebar":null,"position":"left         //靠左放置","display":"always       //在所有页面中都显示","offset":"12            //文章间距（只对Pisces | Gemini两种风格有效）","b2t":"false            //返回顶部按钮（只对Pisces | Gemini两种风格有效）","scrollpercent":"true   //返回顶部按钮的百分比"},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":false,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="右值引用应该是C++11引入的一个非常重要的技术，因为它是移动语义（Move semantics）与完美转发（Perfect forwarding）的基石：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="左值与右值">
+<meta property="og:url" content="http://example.com/2020/11/16/%E5%B7%A6%E5%80%BC%E4%B8%8E%E5%8F%B3%E5%80%BC/index.html">
+<meta property="og:site_name" content="笔记杂货铺">
+<meta property="og:description" content="右值引用应该是C++11引入的一个非常重要的技术，因为它是移动语义（Move semantics）与完美转发（Perfect forwarding）的基石：">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-11-16T11:04:07.768Z">
+<meta property="article:modified_time" content="2020-11-23T08:09:21.222Z">
+<meta property="article:author" content="zhuoM">
+<meta property="article:tag" content="右值">
+<meta property="article:tag" content="move">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2020/11/16/%E5%B7%A6%E5%80%BC%E4%B8%8E%E5%8F%B3%E5%80%BC/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<link rel="stylesheet" type="text/css" href="/css/injector.css" />
+  <title>左值与右值 | 笔记杂货铺</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">笔记杂货铺</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">一条想翻身的咸鱼</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-学习规划">
+
+    <a href="https://mind.airmore.cn/doc/ee1a0a03d527fce6988ca8544c4ff330%20/" rel="noopener" target="_blank"><i class="fa fa-user fa-fw"></i>学习规划</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/zhuoM-Go" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/11/16/%E5%B7%A6%E5%80%BC%E4%B8%8E%E5%8F%B3%E5%80%BC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/Logo.png">
+      <meta itemprop="name" content="zhuoM">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="笔记杂货铺">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          左值与右值
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-11-16 19:04:07" itemprop="dateCreated datePublished" datetime="2020-11-16T19:04:07+08:00">2020-11-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-11-23 16:09:21" itemprop="dateModified" datetime="2020-11-23T16:09:21+08:00">2020-11-23</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/%E5%B8%B8%E8%A7%84%E8%AF%AD%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">常规语法</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/11/16/%E5%B7%A6%E5%80%BC%E4%B8%8E%E5%8F%B3%E5%80%BC/" class="post-meta-item leancloud_visitors" data-flag-title="左值与右值" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/11/16/%E5%B7%A6%E5%80%BC%E4%B8%8E%E5%8F%B3%E5%80%BC/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/11/16/%E5%B7%A6%E5%80%BC%E4%B8%8E%E5%8F%B3%E5%80%BC/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>10k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>9 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>右值引用应该是<code>C++11</code>引入的一个非常重要的技术，因为它是移动语义（Move semantics）与完美转发（Perfect forwarding）的基石：<a id="more"></a></p>
+<ul>
+<li><strong>移动语义</strong>：将内存的所有权从一个对象转移到另外一个对象，高效的移动用来替换效率低下的复制，对象的移动语义需要实现移动构造函数（move constructor）和移动赋值运算符（move assignment operator）。</li>
+<li><strong>完美转发</strong>：定义一个函数模板，该函数模板可以接收任意类型参数，然后将参数转发给其它目标函数，且保证目标函数接受的参数其类型与传递给模板函数的类型相同。</li>
+</ul>
+<h3 id="1、左值与右值"><a href="#1、左值与右值" class="headerlink" title="1、左值与右值"></a>1、左值与右值</h3><p>在讲解右值引用之前，你必须首先要区分两个概念：左值与右值。但是精确讲解清楚这两个概念并不容易。首先，你要清楚左值与右值是C++中表达式的属性，在<code>C++11</code>中，每个表达式有两个属性：类型（type，除去引用特性，用于类型检查）和值类型（value category，用于语法检查，比如一个表达式结果是否能被赋值）。值类型包括3个基本类型：<code>lvalue</code>、<code>prvalue</code>与<code>xrvalue</code>。后两者又统称为<code>rvalue</code>。<code>lvalue</code>我们称为左值，你可以将左值看成是一个可以获取地址的量，它可以用来标识一个对象或函数。<code>rvalue</code>称为右值，你可以认为所有不是左值的量就是右值，这是最简单的解释。要准确区分出右值中的<code>prvalue</code>和<code>xrvalue</code>并不容易：大概前者就是纯粹的右值，比如字面量，后者指的是可以被重用的临时对象。如果你感兴趣，你可以访问<a href="https://link.zhihu.com/?target=http://en.cppreference.com/w/cpp/language/value_category">cppreference</a>去细究。但是，你只要能够区分开左值与右值就够了。</p>
+<h3 id="2、左值引用"><a href="#2、左值引用" class="headerlink" title="2、左值引用"></a>2、左值引用</h3><p>在<code>C++11</code>之前就已经有了左值引用，有时候我们简称为引用，其语法很简单：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> x = <span class="number">20</span>;</span><br><span class="line"><span class="keyword">int</span>&amp; rx = x;   <span class="comment">// 定义引用时必须初始化</span></span><br></pre></td></tr></table></figure>
+
+<p>但是引用也分为const引用与non-const引用，对于non-const引用，其只能用non-const左值来初始化：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> x = <span class="number">20</span>;</span><br><span class="line"><span class="keyword">int</span>&amp; rx1 = x;   <span class="comment">// non-const引用可以被non-const左值初始化</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> y = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">int</span>&amp; rx2 = y;  <span class="comment">// 非法：non-const引用不能被const左值初始化</span></span><br><span class="line"><span class="keyword">int</span>&amp; rx3 = <span class="number">10</span>;      <span class="comment">// 非法：non-const引用不能被右值初始化</span></span><br></pre></td></tr></table></figure>
+
+<p>但是const引用限制就少了：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> x = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> cx = <span class="number">20</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span>&amp; rx1 = x;   <span class="comment">// const引用可以被non-const左值初始化</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span>&amp; rx2 = cx;  <span class="comment">// const引用可以被const左值初始化</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span>&amp; rx3 = <span class="number">9</span>;   <span class="comment">// const引用可以被右值初始化</span></span><br></pre></td></tr></table></figure>
+
+<p>理解上面并不难，因为你只要想着这样初始化不会造成矛盾就好了，特别注意的是const左值引用可以接收右值（这点很重要，后面会说）。</p>
+<h3 id="3、右值引用"><a href="#3、右值引用" class="headerlink" title="3、右值引用"></a>3、右值引用</h3><p><code>C++11</code>以前，右值被认为是无用的资源，所以在<code>C++11</code>中引入了右值引用，就是为了重用右值。定义右值引用需要使用<code>&amp;&amp;</code>：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>&amp;&amp; rrx = <span class="number">200</span>;</span><br></pre></td></tr></table></figure>
+
+<p>右值引用一定不能被左值所初始化，只能用右值初始化：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> x = <span class="number">20</span>;    <span class="comment">// 左值</span></span><br><span class="line"><span class="keyword">int</span>&amp;&amp; rrx1 = x;   <span class="comment">// 非法：右值引用无法被左值初始化</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span>&amp;&amp; rrx2 = x;  <span class="comment">// 非法：右值引用无法被左值初始化</span></span><br></pre></td></tr></table></figure>
+
+<p>那么为什么呢？因为右值引用的目的是为了延长用来初始化对象的生命周期，对于左值，其生命周期与其作用域有关，你没有必要去延长，这是我的理解。既然是延长，那么就出现了下面的情况：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> x = <span class="number">20</span>;   <span class="comment">// 左值</span></span><br><span class="line"><span class="keyword">int</span>&amp;&amp; rx = x * <span class="number">2</span>;  <span class="comment">// x*2的结果是一个右值，rx延长其生命周期</span></span><br><span class="line"><span class="keyword">int</span> y = rx + <span class="number">2</span>;   <span class="comment">// 因此你可以重用它：42</span></span><br><span class="line">rx = <span class="number">100</span>;         <span class="comment">// 一旦你初始化一个右值引用变量，该变量就成为了一个左值，可以被赋值</span></span><br></pre></td></tr></table></figure>
+
+<p>这点很重要，初始化之后的右值引用将变成一个左值，如果是non-const还可以被赋值！</p>
+<p>右值引用还可以用于函数参数：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 接收左值</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fun</span><span class="params">(<span class="keyword">int</span>&amp; lref)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;l-value reference\n&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 接收右值</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fun</span><span class="params">(<span class="keyword">int</span>&amp;&amp; rref)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;r-value reference\n&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> x = <span class="number">10</span>;</span><br><span class="line">    fun(x);   <span class="comment">// output: l-value reference</span></span><br><span class="line">    fun(<span class="number">10</span>);  <span class="comment">// output: r-value reference</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，函数参数要区分开右值引用与左值引用，这是两个不同的重载版本。还有，如果你定义了下面的函数：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fun</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span>&amp; clref)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;l-value const reference\n&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>但是其实它不仅可以接收左值，而且可以接收右值（如果你没有提供接收右值引用的重载版本）。</p>
+<h3 id="4、移动语义"><a href="#4、移动语义" class="headerlink" title="4、移动语义"></a>4、移动语义</h3><p>有了右值引用的概念，就可以理解移动语义了。前面说过，一个对象的移动语义的实现是通过移动构造函数与移动赋值运算符来实现的。所以，为了理解移动语义，我们从一个对象出发，下面创建一个动态数组类：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DynamicArray</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">explicit</span> <span class="title">DynamicArray</span><span class="params">(<span class="keyword">int</span> size)</span> :</span></span><br><span class="line"><span class="function">        m_size</span>&#123; size &#125;, m_array&#123; <span class="keyword">new</span> T[size] &#125;</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Constructor: dynamic array is created!\n&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">virtual</span> ~DynamicArray()</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">delete</span>[] m_array;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Destructor: dynamic array is destroyed!\n&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 复制构造函数</span></span><br><span class="line">    DynamicArray(<span class="keyword">const</span> DynamicArray&amp; rhs) :</span><br><span class="line">        m_size&#123; rhs.m_size &#125;</span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">        m_array = <span class="keyword">new</span> T[m_size];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m_size; ++i)</span><br><span class="line">            m_array[i] = rhs.m_array[i];</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Copy constructor: dynamic array is created!\n&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 复制赋值操作符</span></span><br><span class="line">    DynamicArray&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> DynamicArray&amp; rhs)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Copy assignment operator is called\n&quot;</span>;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span> == &amp;rhs)</span><br><span class="line">            <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">delete</span>[] m_array;</span><br><span class="line"></span><br><span class="line">        m_size = rhs.m_size;</span><br><span class="line">        m_array = <span class="keyword">new</span> T[m_size];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m_size; ++i)</span><br><span class="line">            m_array[i] = rhs.m_array[i];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 索引运算符</span></span><br><span class="line">    T&amp; <span class="keyword">operator</span>[](<span class="keyword">int</span> index)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 不进行边界检查</span></span><br><span class="line">        <span class="keyword">return</span> m_array[index];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> T&amp; <span class="keyword">operator</span>[](<span class="keyword">int</span> index) <span class="keyword">const</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> m_array[index];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">size</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> m_size; &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    T* m_array;</span><br><span class="line">    <span class="keyword">int</span> m_size;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>我们通过在堆上动态分配内存来实现动态数组类，类中实现复制构造函数、复制赋值操作符以及索引操作符。假如我们定义一个生产动态数组的工厂函数：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 生产int动态数组的工厂函数</span></span><br><span class="line"><span class="function">DynamicArray&lt;<span class="keyword">int</span>&gt; <span class="title">arrayFactor</span><span class="params">(<span class="keyword">int</span> size)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">DynamicArray&lt;<span class="keyword">int</span>&gt; <span class="title">arr</span><span class="params">(size)</span></span>;</span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后我们用下面的代码进行测试：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    &#123;</span><br><span class="line">        DynamicArray&lt;<span class="keyword">int</span>&gt; arr = arrayFactor(<span class="number">10</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其输出为：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Constructor: dynamic <span class="built_in">array</span> is created!</span><br><span class="line">Copy constructor: dynamic <span class="built_in">array</span> is created!</span><br><span class="line">Destructor: dynamic <span class="built_in">array</span> is destroyed!</span><br><span class="line">Destructor: dynamic <span class="built_in">array</span> is destroyed!</span><br></pre></td></tr></table></figure>
+
+<p>此时，我们来解读这个输出。首先，你调用arrayFactor函数，内部创建了一个动态数组，所以普通构造函数被调用。然后将这个动态数组返回，但是这个对象是函数内部的，函数外是无法获得的，所以要生成一个临时对象，然后用这个动态数组初始化，函数最终返回的是临时对象。我们知道这个动态数组即将消亡，所以其是右值，那么在构建临时对象时，会调用复制构造函数（没有右值的版本，但是右值可以传递给const左值引用参数）。但是问题又来了，因为你返回的这个临时对象又拿去初始化另外一个对象<code>arr</code>，当然调用也是复制构造函数。调用两次复制构造函数完全没有必要，编译器也会这么想，所以将其优化：直接拿函数内部创建的动态数组去初始化<code>arr</code>。所以仅有一次复制构造函数被调用，但是一旦完成<code>arr</code>的创建，那个动态数组对象就被析构了。最后<code>arr</code>离开其作用域被析构。我们看到编译器尽管做了优化，但是还是导致对象被创建了两次，函数内部创建的动态数组仅仅是一个中间对象，用完后就被析构了，有没有可能直接将其申请的空间直接转移到<code>arr</code>，那么资源得以重用，实际上只用申请一份内存。但是问题的关键是复制构造函数执行的是复制，不是转移，无法实现这样的功能。此时，你需要移动构造函数：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DynamicArray</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">        <span class="comment">// ...其它省略</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 移动构造函数</span></span><br><span class="line">    DynamicArray(DynamicArray&amp;&amp; rhs) :</span><br><span class="line">        m_size&#123; rhs.m_size &#125;, m_array&#123;rhs.m_array&#125;</span><br><span class="line">    &#123;</span><br><span class="line">        rhs.m_size = <span class="number">0</span>;</span><br><span class="line">        rhs.m_array = <span class="literal">nullptr</span>;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Move constructor: dynamic array is moved!\n&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 移动赋值操作符</span></span><br><span class="line">    DynamicArray&amp; <span class="keyword">operator</span>=(DynamicArray&amp;&amp; rhs)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Move assignment operator is called\n&quot;</span>;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span> == &amp;rhs)</span><br><span class="line">            <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">        <span class="keyword">delete</span>[] m_array;</span><br><span class="line">        m_size = rhs.m_size;</span><br><span class="line">        m_array = rhs.m_array;</span><br><span class="line">        rhs.m_size = <span class="number">0</span>;</span><br><span class="line">        rhs.m_array = <span class="literal">nullptr</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>上面是移动构造函数与移动赋值操作符的实现，相比复制构造函数与复制赋值操作符，前者没有再分配内存，而是实现内存所有权转移。那么测试相同的代码，其结果是：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Constructor: dynamic <span class="built_in">array</span> is created!</span><br><span class="line">Move constructor: dynamic <span class="built_in">array</span> is moved!</span><br><span class="line">Destructor: dynamic <span class="built_in">array</span> is destroyed!</span><br><span class="line">Destructor: dynamic <span class="built_in">array</span> is destroyed!</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，调用的是移动构造函数，那么函数内部申请的动态数组直接被转移到<code>arr</code>。从而减少了一份相同内存的申请与释放。注意析构函数被调用两次，这是因为尽管内部进行了内存转移，但是临时对象依然存在，只不过第一次析构函数析构的是一个<code>nullptr</code>，这不会对程序有影响。其实通过这个例子，我们也可以看到，一旦你已经自己创建了复制构造函数与复制赋值运算符后，编译器不会创建默认的移动构造函数和移动赋值运算符，这点要注意。最好的话，这个4个函数一旦自己实现一个，就应该养成实现另外3个的习惯。</p>
+<p>这就是移动语义，用移动而不是复制来避免无必要的资源浪费，从而提升程序的运行效率。其实在<code>C++11</code>中，<code>STL</code>的容器都实现了移动构造函数与移动赋值运算符，这将大大优化<code>STL</code>容器。</p>
+<h3 id="5、std-move"><a href="#5、std-move" class="headerlink" title="5、std::move"></a>5、std::move</h3><p>移动语义前面已经介绍了，我们知道对象的移动语义的实现是依靠移动构造函数和移动赋值操作符。但是前提是你传入的必须是右值，但是有时候你需要将一个左值也进行移动语义（因为你已经知道这个左值后面不再使用），那么就必须提供一个机制来将左值转化为右值。在<code>C++</code>中，<code>std::move</code>就是专为此而生，看下面的例子：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v1&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>&#125;;</span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v2 = v1;             <span class="comment">// 此时调用复制构造函数，v2是v1的副本</span></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v3 = <span class="built_in">std</span>::move(v1);  <span class="comment">// 此时调用移动构造函数，v3与v1交换：v1为空，v3为&#123;1, 2, 3, 4&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>可以看到，我们通过<code>std::move</code>将<code>v1</code>转化为右值，从激发<code>v3</code>的移动构造函数，实现移动语义。</p>
+<p><code>C++</code>中利用<code>std::move</code>实现移动语义的一个典型函数是<code>std::swap</code>：实现两个对象的交换。<code>C++11</code>之前，<code>std::swap</code>的实现如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(T&amp; a, T&amp; b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    T tmp&#123;a&#125;;  <span class="comment">// 调用复制构造函数</span></span><br><span class="line">    a = b;     <span class="comment">// 复制赋值运算符</span></span><br><span class="line">    b = tmp;     <span class="comment">// 复制赋值运算符</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>从上面的实现可以看到：共进行了3次复制。如果类型<code>T</code>比较占内存，那么交换的代价是非常昂贵的。但是利用移动语义，我们可以更加高效地交换两个对象：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(T&amp; a, T&amp; b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">T <span class="title">temp</span><span class="params">(<span class="built_in">std</span>::move(a))</span></span>;   <span class="comment">// 调用移动构造函数</span></span><br><span class="line">    a = <span class="built_in">std</span>::move(b);       <span class="comment">// 调用移动赋值运算符</span></span><br><span class="line">    b = <span class="built_in">std</span>::move(tmp);     <span class="comment">// 调用移动赋值运算符</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>仅通过三次移动，实现两个对象的交换，由于没有复制，效率更高！</p>
+<p>你可能会想，<code>std::move</code>函数内部到底是怎么实现的。其实<code>std::move</code>函数并不“移动”，它仅仅进行了类型转换。下面给出一个简化版本的<code>std::move</code>:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="keyword">typename</span> remove_reference&lt;T&gt;::<span class="function">type&amp;&amp; <span class="title">move</span><span class="params">(T&amp;&amp; param)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">using</span> ReturnType = <span class="keyword">typename</span> remove_reference&lt;T&gt;::type&amp;&amp;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">static_cast</span>&lt;ReturnType&gt;(param);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>代码很短，但是估计很难懂。首先看一下函数的返回类型，<code>remove_reference</code>在头文件中，<code>remove_reference&lt;T&gt;</code>有一个成员<code>type</code>，是<code>T</code>去除引用后的类型，所以<code>remove_reference&lt;T&gt;::type&amp;&amp;</code>一定是右值引用，对于返回类型为右值的函数其返回值是一个右值（准确地说是<code>xvalue</code>）。所以，知道了<code>std::move</code>函数的返回值是一个右值。然后，我们看一下函数的参数，使用的是通用引用类型（<code>&amp;&amp;</code>），意味者其可以接收左值，也可以接收右值。其推导规则如下：如果实参是左值，推导后的形参是左值引用，如果是右值，推导出来的是右值引用（感兴趣的话可以看看reference collapsing）。但是不管怎么推导，<code>ReturnType</code>的类型一定是右值引用，最后<code>std::move</code>函数只是简单地调用<code>static_cast</code>将参数转化为右值引用。所以，<code>std::move</code>什么也没有做，只是告诉编译器将传入的参数无条件地转化为一个右值。所以，当你使用<code>std::move</code>作用于一个对象时，你只是告诉编译器这个对象要转化为右值，然后就有资格进行移动语义了！</p>
+<p>下面举一个由于误用<code>std::move</code>而无效的例子。假如你在设计一个标注类，其构造函数接收一个<code>string</code>类型参数作为标注文本，你不希望它被修改，所以标注为const，然后将其复制给其的一个数据成员，你可能会使用移动语义：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Annotation</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">explicit</span> <span class="title">Annotation</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span>&amp; text)</span>:</span></span><br><span class="line"><span class="function">        <span class="title">m_text</span> <span class="params">(<span class="built_in">std</span>::move(text))</span></span></span><br><span class="line"><span class="function">    </span>&#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">const</span> <span class="built_in">string</span>&amp; <span class="title">getText</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> m_text; &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="built_in">string</span> m_text;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>然后你高高兴兴地去测试：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">text</span><span class="params">(<span class="string">&quot;hello&quot;</span>)</span> </span>;</span><br><span class="line">    <span class="function">Annotation <span class="title">ant</span><span class="params">(text )</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; ant.getText() &lt;&lt; <span class="built_in">endl</span>;  <span class="comment">// output: hello</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; text &lt;&lt; <span class="built_in">endl</span>;           <span class="comment">// output: hello 不是空，移动语义没有实现</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>你发现移动语义并没有被实现，这是为什么呢？首先，从直观上看，假如你移动语义成功了，那么<code>text</code>会发生改变，这会违反其const属性。所以，你不大可能成功！其实，<code>std::move</code>函数会在推导形参时会保持形参的const属性，所以其最终返回的是一个const右值引用类型，那么<code>m_text(std::move(text))</code>到底会调用什么构造函数呢？我们知道<code>string</code>的内部有两个构造函数可能会匹配：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">string</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="built_in">string</span>(<span class="keyword">const</span> <span class="built_in">string</span>&amp; rhs);   <span class="comment">// 复制构造函数</span></span><br><span class="line">    <span class="built_in">string</span>(<span class="built_in">string</span>&amp;&amp; rhs);    <span class="comment">// 移动构造函数</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>那么到底会匹配哪个呢？肯定的是移动构造函数不会被匹配，因为不接受const对象，复制构造函数会匹配吗？答案是可以，因为前面我们讲过const左值引用可以接收右值，const右值更可以！所以，你其实调用了复制构造函数，那么移动语义当然无法实现。</p>
+<p>所以，如果你想接下来进行移动，那不要把<code>std::move</code>引用在const对象上！</p>
+<blockquote>
+<p><strong>tips:</strong><br>1、只有当一个类没有定义任何自己的拷贝控制成员时，且他的所有数据成员都能移动构造或者移到赋值时，编译器才会为他合成移动构造函数或移动赋值运算符。<br>2、当定义了一个移动构造函数或移动赋值运算符的类必须也定义自己的拷贝操作。否则，这些成员默认被定义为删除。</p>
+</blockquote>
+<h3 id="6、std-forward与完美转发"><a href="#6、std-forward与完美转发" class="headerlink" title="6、std::forward与完美转发"></a>6、std::forward与完美转发</h3><p>前面已经讲过，完美转发就是创建一个函数，该函数可以接收任意类型的参数，然后将这些参数按原来的类型转发给目标函数，完美转发的实现要依靠<code>std::forward</code>函数。下面就定义了这样一个函数：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 目标函数</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">foo</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span>&amp; str)</span></span>;   <span class="comment">// 接收左值</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">foo</span><span class="params">(<span class="built_in">string</span>&amp;&amp; str)</span></span>;        <span class="comment">// 接收右值</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">wrapper</span><span class="params">(T&amp;&amp; param)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    foo(<span class="built_in">std</span>::forward&lt;T&gt;(param));  <span class="comment">// 完美转发</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>首先要有一点要明确，不论传入<code>wrapper</code>的参数是左值还是右值，一旦传入之后，<code>param</code>一定是左值，然后我们来具体分析这个函数：</p>
+<ul>
+<li>当一个类型为<code>string</code>类型的右值传递给<code>wrapper</code>时，<code>T</code>被推导为<code>string</code>，<code>param</code>为右值引用类型，但是一旦传入后，<code>param</code>就变成了左值，所以你直接转发给<code>foo</code>函数，将丢失<code>param</code>的右值属性，那么<code>std::forward</code>就确保传入<code>foo</code>的值还是一个右值；</li>
+<li>当类型为<code>const string</code>的左值传递给<code>wrapper</code>时，<code>T</code>被推导为<code>const string&amp;</code>，<code>param</code>为const左值引用类型，传入后，<code>param</code>仍为const左值类型，所以你直接转发给<code>foo</code>函数，没有问题，此时应用<code>std::forward</code>函数可以看成什么也没有做；</li>
+<li>当类型为<code>string</code>的左值传递给<code>wrapper</code>时，<code>T</code>被推导为<code>string&amp;</code>，<code>param</code>为左值引用类型，传入后，<code>param</code>仍为左值类型，所以你直接转发给<code>foo</code>函数，没有问题，此时应用<code>std::forward</code>函数可以看成什么也没有做；</li>
+</ul>
+<p>所以<code>wrapper</code>函数可以实现完美转发，其关键点在于使用了<code>std::forward</code>函数确保传入的右值依然转发为右值，而对左值传入不做处理。</p>
+<p>那么，<code>std::forward</code>到底怎么处理，其实现如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt; </span><br><span class="line"><span class="function">T&amp;&amp; <span class="title">forward</span><span class="params">(<span class="keyword">typename</span> remove_reference&lt;T&gt;::type&amp; param)</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">static_cast</span>&lt;T&amp;&amp;&gt;(param);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>代码依然与<code>std::move</code>一样简洁，我们结合<code>wrapper</code>来看，如果传入<code>wrapper</code>函数中的是<code>string</code>左值，那么推导出<code>T</code>是<code>string&amp;</code>，那么将调用<code>std::foward&lt;string&amp;&gt;</code>，根据<code>std::foward</code>的实现，其实例化为：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">string</span>&amp; &amp;&amp; <span class="title">forward</span><span class="params">(<span class="keyword">typename</span> remove_reference&lt;<span class="built_in">string</span>&amp;&gt;::type&amp; param)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">static_cast</span>&lt;<span class="built_in">string</span>&amp; &amp;&amp;&gt;(param);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>连续出现3个<code>&amp;</code>符号有点奇怪，我们知道<code>C++</code>不允许引用的引用，那么其实编译器这里进行是引用折叠（reference collapsing，大致就是后面的引用消掉），因此，变成：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">string</span>&amp; <span class="title">forward</span><span class="params">(<span class="built_in">string</span>&amp; param)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">static_cast</span>&lt;<span class="built_in">string</span>&amp;&gt;(param);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的代码就很清晰了，一个左值引用的参数，然后还是返回左值引用，此时的<code>std::foward</code>就是什么也没有做，因为传入与返回完全一样。</p>
+<p>那么如果传入<code>wrapper</code>函数中的是<code>string</code>右值，那么推导出<code>T</code>是<code>string</code>，那么将调用<code>std::foward&lt;string&gt;</code>，根据<code>std::foward</code>的实现，其实例化为：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">string</span> &amp;&amp; <span class="title">forward</span><span class="params">(<span class="keyword">typename</span> remove_reference&lt;<span class="built_in">string</span>&gt;::type&amp; param)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">static_cast</span>&lt;<span class="built_in">string</span>&amp;&amp;&gt;(param);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>继续简化，变成：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">string</span>&amp;&amp; <span class="title">forward</span><span class="params">(<span class="built_in">string</span>&amp; param)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">static_cast</span>&lt;<span class="built_in">string</span>&amp;&amp;&gt;(param);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>参数依然是左值引用（这点是一致的，因为前面说过传入<code>std:;forward</code>中的实参一直是左值），但是返回的是右值引用，此时的<code>std::foward</code>就是将一个左值转化了右值，这样保证传入目标函数的实参是右值！</p>
+<p>综上，可以看到<code>std::foward</code>函数是有条件地将传入的参数转化为右值，而<code>std::move</code>无条件地将参数转化为右值，这是两者的区别。但是本质上，两者什么没有做，做多就是进行了一次类型转换。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E5%8F%B3%E5%80%BC/" rel="tag"><i class="fa fa-tag"></i> 右值</a>
+              <a href="/tags/move/" rel="tag"><i class="fa fa-tag"></i> move</a>
+          </div>
+		  <script type="text/javascript">
+          var tagsall=document.getElementsByClassName("post-tags")
+          for (var i = tagsall.length - 1; i >= 0; i--){
+              var tags=tagsall[i].getElementsByTagName("a");
+              for (var j = tags.length - 1; j >= 0; j--) {
+                  var r=Math.floor(Math.random()*75+150);
+                  var g=Math.floor(Math.random()*75+180);
+                  var b=Math.floor(Math.random()*75+100);
+                  tags[j].style.background = "rgb("+r+","+g+","+b+")";
+              }
+          }                        
+          </script>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/11/16/allocator%20%E4%BD%BF%E7%94%A8/" rel="prev" title="allocator 使用">
+      <i class="fa fa-chevron-left"></i> allocator 使用
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/11/17/C++%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E5%87%BD%E6%95%B0%EF%BC%9A%E5%B0%86%E5%BD%93%E5%89%8D%E7%B1%BB%E7%9A%84%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E4%B8%BA%E5%85%B6%E5%AE%83%E7%B1%BB%E5%9E%8B/" rel="next" title="类类型转换">
+      类类型转换 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E5%B7%A6%E5%80%BC%E4%B8%8E%E5%8F%B3%E5%80%BC"><span class="nav-text">1、左值与右值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E5%B7%A6%E5%80%BC%E5%BC%95%E7%94%A8"><span class="nav-text">2、左值引用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81%E5%8F%B3%E5%80%BC%E5%BC%95%E7%94%A8"><span class="nav-text">3、右值引用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81%E7%A7%BB%E5%8A%A8%E8%AF%AD%E4%B9%89"><span class="nav-text">4、移动语义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5%E3%80%81std-move"><span class="nav-text">5、std::move</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6%E3%80%81std-forward%E4%B8%8E%E5%AE%8C%E7%BE%8E%E8%BD%AC%E5%8F%91"><span class="nav-text">6、std::forward与完美转发</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="zhuoM"
+      src="/img/Logo.png">
+  <p class="site-author-name" itemprop="name">zhuoM</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+	<h3></h3>
+	<h3></h3>
+    <div style="">
+  <canvas id="canvas" style="width:60%;">当前浏览器不支持canvas，请更换浏览器后再试</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //声明canvas的宽高
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //存储时间数据
+    var data = [];
+    //存储运动的小球
+    var balls = [];
+    //设置粒子半径
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //存储时间数字，由十位小时、个位小时、冒号、十位分钟、个位分钟、冒号、十位秒钟、个位秒钟这7个数字组成
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*生成点阵数字*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*更新时钟*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //时间发生变化
+            if(NewData[i] !== data[i]){
+                //将变化的数字值和在data数组中的索引存储在changeNumArray数组中
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //增加小球
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*更新小球状态*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*增加要运动的小球*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*渲染*/
+    function render(){
+        //重置画布宽度，达到清空画布的效果
+        canvas.height = 100;
+        //渲染时钟
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //渲染小球
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //更新时钟
+        updateDigitTime();
+        //更新小球状态
+        updateBalls();
+        //渲染
+        render();
+    },50);
+}
+
+})();
+</script>
+
+	
+    <script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+    <div class="widget-wrap">
+        <h3 class="widget-title"></h3>
+        <div id="myCanvasContainer" class="widget tagcloud">
+            <canvas width="250" height="250" id="resCanvas" style="width=100%">
+                <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Lambda/" rel="tag">Lambda</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/QString/" rel="tag">QString</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Qt/" rel="tag">Qt</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STL/" rel="tag">STL</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Static/" rel="tag">Static</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Template/" rel="tag">Template</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/assign/" rel="tag">assign</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bind/" rel="tag">bind</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/connect/" rel="tag">connect</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/const/" rel="tag">const</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/constexpr/" rel="tag">constexpr</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/explicit/" rel="tag">explicit</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/extern/" rel="tag">extern</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/function/" rel="tag">function</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/initializer-list/" rel="tag">initializer_list</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/move/" rel="tag">move</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/push-bak/" rel="tag">push_bak</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/static-cast/" rel="tag">static_cast</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/string/" rel="tag">string</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tuple/" rel="tag">tuple</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/typedef/" rel="tag">typedef</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/typeid/" rel="tag">typeid</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/using/" rel="tag">using</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vector/" rel="tag">vector</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/" rel="tag">内存分配</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88/" rel="tag">函数指针</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%8B%E5%85%83%E5%87%BD%E6%95%B0/" rel="tag">友元函数</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%B3%E5%80%BC/" rel="tag">右值</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AE%B9%E5%99%A8%E7%AE%97%E6%B3%95/" rel="tag">容器算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" rel="tag">数据结构与算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/" rel="tag">智能指针</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BD%AC%E6%8D%A2/" rel="tag">转换</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BF%AD%E4%BB%A3%E5%99%A8/" rel="tag">迭代器</a><span class="tag-list-count">1</span></li></ul>
+            </canvas>
+         </div>
+    </div>
+
+	
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhuoM</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">150k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">2:17</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/canvas_sphere.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  <script async src="/js/cursor/fireworks.js"></script>
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'qd4EK8z8jRMopJAh5Qy45UMq-gzGzoHsz',
+      appKey     : 'VVPNVnpHyBVnYXp0DTST8vtc',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+<div class="moon-menu">
+  <div class="moon-menu-items">
+    
+    <div class="moon-menu-item" onclick="back2bottom()">
+      <i class='fa fa-chevron-down'></i>    </div>
+    
+    <div class="moon-menu-item" onclick="back2top()">
+      <i class='fa fa-chevron-up'></i>    </div>
+    
+  </div>
+  <div class="moon-menu-button">
+    <svg class="moon-menu-bg">
+      <circle class="moon-menu-cricle" cx="50%" cy="50%" r="44%"></circle>
+      <circle class="moon-menu-border" cx="50%" cy="50%" r="48%"></circle>
+    </svg>
+    <div class="moon-menu-content">
+      <div class="moon-menu-icon"><i class='fas fa-ellipsis-v'></i></div>
+      <div class="moon-menu-text"></div>
+    </div>
+  </div>
+</div><script src="/js/injector.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":150,"height":300,"vOffset":130},"mobile":{"show":true},"log":false,"tagMode":false});</script></body>
+</html>

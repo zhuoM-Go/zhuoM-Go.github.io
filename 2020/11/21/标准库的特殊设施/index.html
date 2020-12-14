@@ -1,0 +1,1448 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"sidebar":null,"position":"left         //靠左放置","display":"always       //在所有页面中都显示","offset":"12            //文章间距（只对Pisces | Gemini两种风格有效）","b2t":"false            //返回顶部按钮（只对Pisces | Gemini两种风格有效）","scrollpercent":"true   //返回顶部按钮的百分比"},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":false,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="1、tuple和tuple相关的一共有4个函数，分别介绍 1.1、make_tuple1auto tup1 &#x3D; std::make_tuple(&quot;Hello World!&quot;, &amp;#x27;a&amp;#x27;, 3.14, 0);  上述代码创建了一个tuple &lt;const char*, char, double, int&gt;类型的元组。 可以看出，在tuple之中可以是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="标准库的特殊设施">
+<meta property="og:url" content="http://example.com/2020/11/21/%E6%A0%87%E5%87%86%E5%BA%93%E7%9A%84%E7%89%B9%E6%AE%8A%E8%AE%BE%E6%96%BD/index.html">
+<meta property="og:site_name" content="笔记杂货铺">
+<meta property="og:description" content="1、tuple和tuple相关的一共有4个函数，分别介绍 1.1、make_tuple1auto tup1 &#x3D; std::make_tuple(&quot;Hello World!&quot;, &amp;#x27;a&amp;#x27;, 3.14, 0);  上述代码创建了一个tuple &lt;const char*, char, double, int&gt;类型的元组。 可以看出，在tuple之中可以是">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://zhuom-go.github.io/img/Regular_expression/1.png">
+<meta property="og:image" content="https://zhuom-go.github.io/img/Regular_expression/2.png">
+<meta property="og:image" content="https://zhuom-go.github.io/img/Regular_expression/3.png">
+<meta property="og:image" content="https://zhuom-go.github.io/img/Second_IO/1.png">
+<meta property="og:image" content="https://zhuom-go.github.io/img/Second_IO/2.png">
+<meta property="og:image" content="https://zhuom-go.github.io/img/Second_IO/23.png">
+<meta property="og:image" content="https://zhuom-go.github.io/img/Second_IO/3.png">
+<meta property="og:image" content="https://zhuom-go.github.io/img/Second_IO/4.png">
+<meta property="og:image" content="https://zhuom-go.github.io/img/Second_IO/5.png">
+<meta property="og:image" content="https://zhuom-go.github.io/img/Second_IO/6.png">
+<meta property="og:image" content="https://zhuom-go.github.io/img/Second_IO/7.png">
+<meta property="og:image" content="https://zhuom-go.github.io/img/Second_IO/8.png">
+<meta property="og:image" content="https://zhuom-go.github.io/img/Second_IO/9.png">
+<meta property="og:image" content="https://zhuom-go.github.io/img/Second_IO/24.png">
+<meta property="og:image" content="https://zhuom-go.github.io/img/Second_IO/10.png">
+<meta property="og:image" content="https://zhuom-go.github.io/img/Second_IO/25.png">
+<meta property="og:image" content="https://zhuom-go.github.io/img/Second_IO/11.png">
+<meta property="og:image" content="https://zhuom-go.github.io/img/Second_IO/12.png">
+<meta property="og:image" content="https://zhuom-go.github.io/img/Second_IO/13.png">
+<meta property="og:image" content="https://zhuom-go.github.io/img/Second_IO/14.png">
+<meta property="og:image" content="https://zhuom-go.github.io/img/Second_IO/15.png">
+<meta property="og:image" content="https://zhuom-go.github.io/img/Second_IO/16.png">
+<meta property="og:image" content="https://zhuom-go.github.io/img/Second_IO/17.png">
+<meta property="og:image" content="https://zhuom-go.github.io/img/Second_IO/26.png">
+<meta property="og:image" content="https://zhuom-go.github.io/img/Second_IO/18.png">
+<meta property="og:image" content="https://zhuom-go.github.io/img/Second_IO/19.png">
+<meta property="og:image" content="https://zhuom-go.github.io/img/Second_IO/20.png">
+<meta property="og:image" content="https://zhuom-go.github.io/img/Second_IO/21.png">
+<meta property="og:image" content="https://zhuom-go.github.io/img/Second_IO/21_1.png">
+<meta property="og:image" content="https://zhuom-go.github.io/img/Second_IO/22.png">
+<meta property="article:published_time" content="2020-11-21T08:41:22.920Z">
+<meta property="article:modified_time" content="2020-11-24T12:21:11.034Z">
+<meta property="article:author" content="zhuoM">
+<meta property="article:tag" content="STL">
+<meta property="article:tag" content="tuple">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zhuom-go.github.io/img/Regular_expression/1.png">
+
+<link rel="canonical" href="http://example.com/2020/11/21/%E6%A0%87%E5%87%86%E5%BA%93%E7%9A%84%E7%89%B9%E6%AE%8A%E8%AE%BE%E6%96%BD/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<link rel="stylesheet" type="text/css" href="/css/injector.css" />
+  <title>标准库的特殊设施 | 笔记杂货铺</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">笔记杂货铺</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">一条想翻身的咸鱼</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-学习规划">
+
+    <a href="https://mind.airmore.cn/doc/ee1a0a03d527fce6988ca8544c4ff330%20/" rel="noopener" target="_blank"><i class="fa fa-user fa-fw"></i>学习规划</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/zhuoM-Go" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/11/21/%E6%A0%87%E5%87%86%E5%BA%93%E7%9A%84%E7%89%B9%E6%AE%8A%E8%AE%BE%E6%96%BD/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/Logo.png">
+      <meta itemprop="name" content="zhuoM">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="笔记杂货铺">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          标准库的特殊设施
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-11-21 16:41:22" itemprop="dateCreated datePublished" datetime="2020-11-21T16:41:22+08:00">2020-11-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-11-24 20:21:11" itemprop="dateModified" datetime="2020-11-24T20:21:11+08:00">2020-11-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/STL/" itemprop="url" rel="index"><span itemprop="name">STL</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/11/21/%E6%A0%87%E5%87%86%E5%BA%93%E7%9A%84%E7%89%B9%E6%AE%8A%E8%AE%BE%E6%96%BD/" class="post-meta-item leancloud_visitors" data-flag-title="标准库的特殊设施" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/11/21/%E6%A0%87%E5%87%86%E5%BA%93%E7%9A%84%E7%89%B9%E6%AE%8A%E8%AE%BE%E6%96%BD/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/11/21/%E6%A0%87%E5%87%86%E5%BA%93%E7%9A%84%E7%89%B9%E6%AE%8A%E8%AE%BE%E6%96%BD/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>15k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>14 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="1、tuple"><a href="#1、tuple" class="headerlink" title="1、tuple"></a>1、tuple</h3><p>和tuple相关的一共有4个函数，分别介绍</p>
+<h4 id="1-1、make-tuple"><a href="#1-1、make-tuple" class="headerlink" title="1.1、make_tuple"></a>1.1、make_tuple</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> tup1 = <span class="built_in">std</span>::make_tuple(<span class="string">&quot;Hello World!&quot;</span>, <span class="string">&#x27;a&#x27;</span>, <span class="number">3.14</span>, <span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+
+<p>上述代码创建了一个<code>tuple &lt;const char*, char, double, int&gt;</code>类型的元组。</p>
+<p>可以看出，在tuple之中可以是完全不同的数据类型。</p>
+<a id="more"></a>
+
+<h4 id="1-2、-tie-用于拆开tuple"><a href="#1-2、-tie-用于拆开tuple" class="headerlink" title="1.2、 tie: 用于拆开tuple"></a>1.2、 tie: 用于拆开tuple</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> tup1 = <span class="built_in">std</span>::make_tuple(<span class="number">3.14</span>, <span class="number">1</span>, <span class="string">&#x27;a&#x27;</span>);</span><br><span class="line"><span class="keyword">double</span> a;</span><br><span class="line"><span class="keyword">int</span> b;</span><br><span class="line"><span class="keyword">char</span> c;</span><br><span class="line"><span class="built_in">std</span>::tie(a, b, c) = tup1;</span><br></pre></td></tr></table></figure>
+
+<p>这样做的结果是<code>a = 3.14, b = 1, c = &#39;a&#39;</code></p>
+<p>如果不想要某一位的值，可以直接将其用<code>ignore</code>代替。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">std</span>::tie(ignore, b, c) = tup1;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="1-3、forward-as-tuple-用于接受右值引用数据生成tuple"><a href="#1-3、forward-as-tuple-用于接受右值引用数据生成tuple" class="headerlink" title="1.3、forward_as_tuple: 用于接受右值引用数据生成tuple"></a>1.3、forward_as_tuple: 用于接受右值引用数据生成tuple</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> tup2 = <span class="built_in">std</span>::forward_as_tuple(<span class="number">1</span>, <span class="string">&quot;hello&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>上述代码创建了一个<code>tuple&lt;int &amp;&amp;, char (&amp;)[6]&gt;</code>类型的元组。</p>
+<p>可以看出，tuple中的参数全部为右值引用。而前面讨论的tie函数就只能接受左值。</p>
+<h4 id="1-4、-tuple-cat-用于连接tuple"><a href="#1-4、-tuple-cat-用于连接tuple" class="headerlink" title="1.4、 tuple_cat: 用于连接tuple"></a>1.4、 tuple_cat: 用于连接tuple</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">std::tuple&lt;float, string&gt; tup1(3.14, &quot;pi&quot;);</span><br><span class="line">std::tuple&lt;int, char&gt; tup2(10, &#x27;a&#x27;);</span><br><span class="line"><span class="keyword">auto</span> tup3 = tuple_cat(tup1, tup2);</span><br></pre></td></tr></table></figure>
+
+<p>将tup1和tup2连起来就成了tup3，里面包含了四个值。为<code>tuple&lt;float,string,int,char&gt;</code></p>
+<h4 id="1-5、对于获取tuple中元素"><a href="#1-5、对于获取tuple中元素" class="headerlink" title="1.5、对于获取tuple中元素"></a>1.5、对于获取tuple中元素</h4><h5 id="1-5-1、get-lt-i-gt-获取第-i-个元素的值"><a href="#1-5-1、get-lt-i-gt-获取第-i-个元素的值" class="headerlink" title="1.5.1、get&lt;i&gt;: 获取第 i 个元素的值"></a><code>1.5.1、get&lt;i&gt;</code>: 获取第 i 个元素的值</h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">std::tuple&lt;float, string&gt; tup1(3.14, &quot;pi&quot;);</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; get&lt;<span class="number">0</span>&gt;(tup1);</span><br></pre></td></tr></table></figure>
+
+<p>这样就输出了tup1中的第一个元素3.14.</p>
+<h5 id="1-5-2、tuple-element-获取tuple中特定元素数据类型"><a href="#1-5-2、tuple-element-获取tuple中特定元素数据类型" class="headerlink" title="1.5.2、tuple_element: 获取tuple中特定元素数据类型"></a>1.5.2、tuple_element: 获取tuple中特定元素数据类型</h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">std</span>::tuple_element&lt;<span class="number">0</span>, <span class="keyword">decltype</span>(tup1)&gt;::type</span><br></pre></td></tr></table></figure>
+
+<p>这样就获取到了tup1中第一个元素的数据类型。</p>
+<p>注意：获取到的就是数据类型，如<code>int</code>，<code>char</code>。而不是写有“int”或者“char”的字符串。</p>
+<h5 id="1-5-3、size-获取tuple中元素个数"><a href="#1-5-3、size-获取tuple中元素个数" class="headerlink" title="1.5.3、size: 获取tuple中元素个数"></a>1.5.3、size: 获取tuple中元素个数</h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">std::tuple&lt;float, string&gt; tup1(3.14, &quot;pi&quot;);</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; tuple_size&lt;<span class="keyword">decltype</span>(tup1)&gt;::value;</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为2，表示该tuple中有两个元素。 </p>
+<p>可以看出，tuple是一个非常强大的数据结构，比以前常用的如pair，vector等都要强大很多。</p>
+<h3 id="2、bitset"><a href="#2、bitset" class="headerlink" title="2、bitset"></a>2、bitset</h3><p>C++的 bitset 在 <code>&lt;bitset&gt;</code> 头文件中，它是一种类似数组的结构，它的每一个元素只能是０或１，每个元素仅用１bit空间。</p>
+<p>一般来说bitset会让你的算法复杂度 /32</p>
+<p>下面是具体用法</p>
+<h4 id="2-1、构造函数"><a href="#2-1、构造函数" class="headerlink" title="2.1、构造函数"></a>2.1、构造函数</h4><p>bitset常用构造函数有四种，如下</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">bitset</span>&lt;4&gt; bitset1;　　<span class="comment">//无参构造，长度为４，默认每一位为０</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="built_in">bitset</span>&lt;8&gt; <span class="title">bitset2</span><span class="params">(<span class="number">12</span>)</span></span>;　　<span class="comment">//长度为８，将12转换成二进制保存到后面，前面用０补充</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">string</span> s = <span class="string">&quot;100101&quot;</span>;</span><br><span class="line"><span class="function"><span class="built_in">bitset</span>&lt;10&gt; <span class="title">bitset3</span><span class="params">(s)</span></span>;　　<span class="comment">//长度为10，前面用０补充</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">char</span> s2[] = <span class="string">&quot;10101&quot;</span>;</span><br><span class="line"><span class="function"><span class="built_in">bitset</span>&lt;13&gt; <span class="title">bitset4</span><span class="params">(s2)</span></span>;　　<span class="comment">//长度为13，前面用０补充</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; bitset1 &lt;&lt; <span class="built_in">endl</span>;　　<span class="comment">//0000</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; bitset2 &lt;&lt; <span class="built_in">endl</span>;　　<span class="comment">//00001100</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; bitset3 &lt;&lt; <span class="built_in">endl</span>;　　<span class="comment">//0000100101</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; bitset4 &lt;&lt; <span class="built_in">endl</span>;　　<span class="comment">//0000000010101</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="2-2、特别注意"><a href="#2-2、特别注意" class="headerlink" title="2.2、特别注意"></a>2.2、特别注意</h4><blockquote>
+<p>1.biset里十进制数进来以后直接用cout输出是正常的二进制。 </p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">bitset</span>&lt;8&gt; <span class="title">bitset2</span><span class="params">(<span class="number">12</span>)</span></span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; bitset2 &lt;&lt; <span class="built_in">endl</span>;　　</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">00001100</span></span><br></pre></td></tr></table></figure>
+
+<p>但是实际上里面的二进制是倒序的。<br> 如果循环从0位输出到最后一位，如：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">8</span>;++i) &#123;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;b[i];</span><br><span class="line">&#125;</span><br><span class="line">	<span class="built_in">puts</span>(<span class="string">&quot;&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>输出的是倒序的：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">00110000</span></span><br></pre></td></tr></table></figure>
+
+<p>如何实现2进制向10进制的转换，而且二进制的表示形式是一种逆序的形式，即低位在前。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">bin2dec</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span>&amp; bin)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function"><span class="built_in">std</span>::<span class="built_in">bitset</span>&lt;8&gt; <span class="title">bs</span><span class="params">(<span class="built_in">string</span>(bin.rbegin(), bin.rend()))</span></span>;</span><br><span class="line">    <span class="keyword">return</span> bs.to_ulong();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>用字符串构造时，字符串只能包含 ‘0’ 或 ‘1’ ，否则会抛出异常。</p>
+</blockquote>
+<p> 构造时，需在&lt;&gt;中表明bitset 的大小(即size)。<br> 在进行有参构造时，若参数的二进制表示比bitset的size小，则在前面用０补充(如上面的栗子)；若比bitsize大，<strong>参数为整数时取后面部分，参数为字符串时取前面部分</strong>(如下面栗子)：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">bitset</span>&lt;2&gt; <span class="title">bitset1</span><span class="params">(<span class="number">12</span>)</span></span>;　　<span class="comment">//12的二进制为1100（长度为４），但bitset1的size=2，只取后面部分，即00</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">string</span> s = <span class="string">&quot;100101&quot;</span>;　　</span><br><span class="line"><span class="function"><span class="built_in">bitset</span>&lt;4&gt; <span class="title">bitset2</span><span class="params">(s)</span></span>;　　<span class="comment">//s的size=6，而bitset的size=4，只取前面部分，即1001</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">char</span> s2[] = <span class="string">&quot;11101&quot;</span>;</span><br><span class="line"><span class="function"><span class="built_in">bitset</span>&lt;4&gt; <span class="title">bitset3</span><span class="params">(s2)</span></span>;　　<span class="comment">//与bitset2同理，只取前面部分，即1110</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; bitset1 &lt;&lt; <span class="built_in">endl</span>;　　<span class="comment">//00</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; bitset2 &lt;&lt; <span class="built_in">endl</span>;　　<span class="comment">//1001</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; bitset3 &lt;&lt; <span class="built_in">endl</span>;　　<span class="comment">//1110</span></span><br><span class="line"><span class="number">1234567891011</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="2-3、可用的操作符"><a href="#2-3、可用的操作符" class="headerlink" title="2.3、可用的操作符"></a>2.3、可用的操作符</h4><p>bitset对于二进制有位操作符，具体如下</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">bitset</span>&lt;4&gt; <span class="title">foo</span> <span class="params">(<span class="built_in">string</span>(<span class="string">&quot;1001&quot;</span>))</span></span>;</span><br><span class="line"><span class="function"><span class="built_in">bitset</span>&lt;4&gt; <span class="title">bar</span> <span class="params">(<span class="built_in">string</span>(<span class="string">&quot;0011&quot;</span>))</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; (foo^=bar) &lt;&lt; <span class="built_in">endl</span>;       <span class="comment">// 1010 (foo对bar按位异或后赋值给foo)</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; (foo&amp;=bar) &lt;&lt; <span class="built_in">endl</span>;       <span class="comment">// 0010 (按位与后赋值给foo)</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; (foo|=bar) &lt;&lt; <span class="built_in">endl</span>;       <span class="comment">// 0011 (按位或后赋值给foo)</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; (foo&lt;&lt;=<span class="number">2</span>) &lt;&lt; <span class="built_in">endl</span>;        <span class="comment">// 1100 (左移２位，低位补０，有自身赋值)</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; (foo&gt;&gt;=<span class="number">1</span>) &lt;&lt; <span class="built_in">endl</span>;        <span class="comment">// 0110 (右移１位，高位补０，有自身赋值)</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; (~bar) &lt;&lt; <span class="built_in">endl</span>;           <span class="comment">// 1100 (按位取反)</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; (bar&lt;&lt;<span class="number">1</span>) &lt;&lt; <span class="built_in">endl</span>;         <span class="comment">// 0110 (左移，不赋值)</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; (bar&gt;&gt;<span class="number">1</span>) &lt;&lt; <span class="built_in">endl</span>;         <span class="comment">// 0001 (右移，不赋值)</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; (foo==bar) &lt;&lt; <span class="built_in">endl</span>;       <span class="comment">// false (0110==0011为false)</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; (foo!=bar) &lt;&lt; <span class="built_in">endl</span>;       <span class="comment">// true  (0110!=0011为true)</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; (foo&amp;bar) &lt;&lt; <span class="built_in">endl</span>;        <span class="comment">// 0010 (按位与，不赋值)</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; (foo|bar) &lt;&lt; <span class="built_in">endl</span>;        <span class="comment">// 0111 (按位或，不赋值)</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; (foo^bar) &lt;&lt; <span class="built_in">endl</span>;        <span class="comment">// 0101 (按位异或，不赋值)</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>此外，可以通过 [ ] 访问元素(类似数组)，注意最低位下标为０</strong>，如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">bitset</span>&lt;4&gt; <span class="title">foo</span> <span class="params">(<span class="string">&quot;1011&quot;</span>)</span></span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; foo[<span class="number">0</span>] &lt;&lt; <span class="built_in">endl</span>;　　<span class="comment">//1</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; foo[<span class="number">1</span>] &lt;&lt; <span class="built_in">endl</span>;　　<span class="comment">//1</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; foo[<span class="number">2</span>] &lt;&lt; <span class="built_in">endl</span>;　　<span class="comment">//0</span></span><br></pre></td></tr></table></figure>
+
+<p>当然，通过这种方式对某一位元素赋值也是可以的，栗子就不放了。</p>
+<h4 id="2-4、可用函数"><a href="#2-4、可用函数" class="headerlink" title="2.4、可用函数"></a>2.4、可用函数</h4><p>bitset还支持一些有意思的函数，比如：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">bitset</span>&lt;8&gt; <span class="title">foo</span> <span class="params">(<span class="string">&quot;10011011&quot;</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; foo.count() &lt;&lt; <span class="built_in">endl</span>;　　<span class="comment">//5　　（count函数用来求bitset中1的位数，foo中共有５个１</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; foo.size() &lt;&lt; <span class="built_in">endl</span>;　　 <span class="comment">//8　　（size函数用来求bitset的大小，一共有８位</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; foo.test(<span class="number">0</span>) &lt;&lt; <span class="built_in">endl</span>;　　<span class="comment">//true　　（test函数用来查下标处的元素是０还是１，并返回false或true，此处foo[0]为１，返回true</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; foo.test(<span class="number">2</span>) &lt;&lt; <span class="built_in">endl</span>;　　<span class="comment">//false　　（同理，foo[2]为０，返回false</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; foo.any() &lt;&lt; <span class="built_in">endl</span>;　　<span class="comment">//true　　（any函数检查bitset中是否有１</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; foo.none() &lt;&lt; <span class="built_in">endl</span>;　　<span class="comment">//false　　（none函数检查bitset中是否没有１</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; foo.all() &lt;&lt; <span class="built_in">endl</span>;　　<span class="comment">//false　　（all函数检查bitset中是全部为１</span></span><br></pre></td></tr></table></figure>
+
+<p>补充说明一下：test函数会对下标越界作出检查，而通过 [ ] 访问元素却不会经过下标检查，所以，在两种方式通用的情况下，选择test函数更安全一些<br> 另外，含有一些函数：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">bitset</span>&lt;8&gt; <span class="title">foo</span> <span class="params">(<span class="string">&quot;10011011&quot;</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"> <span class="built_in">cout</span> &lt;&lt; foo.flip(<span class="number">2</span>) &lt;&lt; <span class="built_in">endl</span>;　　<span class="comment">//10011111　　（flip函数传参数时，用于将参数位取反，本行代码将foo下标２处&quot;反转&quot;，即０变１，１变０</span></span><br><span class="line"> <span class="built_in">cout</span> &lt;&lt; foo.flip() &lt;&lt; <span class="built_in">endl</span>;　　 <span class="comment">//01100000　　（flip函数不指定参数时，将bitset每一位全部取反</span></span><br><span class="line"></span><br><span class="line"> <span class="built_in">cout</span> &lt;&lt; foo.<span class="built_in">set</span>() &lt;&lt; <span class="built_in">endl</span>;　　　　<span class="comment">//11111111　　（set函数不指定参数时，将bitset的每一位全部置为１</span></span><br><span class="line"> <span class="built_in">cout</span> &lt;&lt; foo.<span class="built_in">set</span>(<span class="number">3</span>,<span class="number">0</span>) &lt;&lt; <span class="built_in">endl</span>;　　<span class="comment">//11110111　　（set函数指定两位参数时，将第一参数位的元素置为第二参数的值，本行对foo的操作相当于foo[3]=0</span></span><br><span class="line"> <span class="built_in">cout</span> &lt;&lt; foo.<span class="built_in">set</span>(<span class="number">3</span>) &lt;&lt; <span class="built_in">endl</span>;　　  <span class="comment">//11111111　　（set函数只有一个参数时，将参数下标处置为１</span></span><br><span class="line"></span><br><span class="line"> <span class="built_in">cout</span> &lt;&lt; foo.reset(<span class="number">4</span>) &lt;&lt; <span class="built_in">endl</span>;　　<span class="comment">//11101111　　（reset函数传一个参数时将参数下标处置为０</span></span><br><span class="line"> <span class="built_in">cout</span> &lt;&lt; foo.reset() &lt;&lt; <span class="built_in">endl</span>;　　 <span class="comment">//00000000　　（reset函数不传参数时将bitset的每一位全部置为０</span></span><br></pre></td></tr></table></figure>
+
+<p>同样，它们也都会检查下标是否越界，如果越界就会抛出异常<br> 最后，还有一些类型转换的函数，如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">bitset</span>&lt;8&gt; <span class="title">foo</span> <span class="params">(<span class="string">&quot;10011011&quot;</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">string</span> s = foo.to_string();　　<span class="comment">//将bitset转换成string类型</span></span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">long</span> a = foo.to_ulong();　　<span class="comment">//将bitset转换成unsigned long类型</span></span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span> b = foo.to_ullong();　　<span class="comment">//将bitset转换成unsigned long long类型</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; s &lt;&lt; <span class="built_in">endl</span>;　　<span class="comment">//10011011</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; a &lt;&lt; <span class="built_in">endl</span>;　　<span class="comment">//155</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; b &lt;&lt; <span class="built_in">endl</span>;　　<span class="comment">//155</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="3、正则表达式"><a href="#3、正则表达式" class="headerlink" title="3、正则表达式"></a>3、正则表达式</h3><p>表达式可以是以下项之一：</p>
+<ul>
+<li><p>一般的字符，可匹配目标序列中相同的字符。<br> 例如：<code>a</code> 只能匹配 <code>a</code>; <code>abc</code>只能匹配<code>abc</code>。</p>
+</li>
+<li><p>通配符 <code>.</code>，可匹配目标序列中除了换行符外的任何字符。<br> 例如：<code>a.c</code> 可以匹配<code>abc</code>、<code>a c</code>、<code>a.c</code>、<code>a1c</code>等等。</p>
+</li>
+<li><p><code>[expr]</code> 形式的括号表达式，可以匹配目标序列中包含在表达式<code>expr</code>定义集内的字符或者排序规则表达式；采用<code>[^expr]</code>，可匹配目标序列中未包含在表达式expr定义集内的字符或排序规则表达式。<br> 表达式<code>expr</code>可以包含下列的任意组合：</p>
+<ul>
+<li>单个字符。例如：<code>[A]</code> 匹配 <code>A</code></li>
+<li><code>ch1-ch2</code>形式的字符域。例如 <code>[A-F]</code> 匹配大写字母A到F中的任何一个字母，比如：匹配 <code>A</code>.</li>
+<li><code>[:name:]</code>形式的字符类。例如：<code>[[:alpha:]]</code> 匹配一个字母（不区分大小写）。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>字符类名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>alnum</td>
+<td>字母（不区分大小写）和数字</td>
+</tr>
+<tr>
+<td>alpha</td>
+<td>字母（不区分大小写）</td>
+</tr>
+<tr>
+<td>blank</td>
+<td>空格或制表符</td>
+</tr>
+<tr>
+<td>cntrl</td>
+<td>文件格式转义字符</td>
+</tr>
+<tr>
+<td>digit</td>
+<td>数字</td>
+</tr>
+<tr>
+<td>graph</td>
+<td>字母（不区分大小写）、数字和英文标点</td>
+</tr>
+<tr>
+<td>lower</td>
+<td>小写字母</td>
+</tr>
+<tr>
+<td>upper</td>
+<td>大写字母</td>
+</tr>
+<tr>
+<td>print</td>
+<td>字母（不区分大小写）、数字、英文标点和空格</td>
+</tr>
+<tr>
+<td>punct</td>
+<td>英文标点</td>
+</tr>
+<tr>
+<td>sapce</td>
+<td>空格</td>
+</tr>
+<tr>
+<td>xdigit</td>
+<td>表示十六进制的字符（数字,a,b,c,d,e,f,A,B,C,D,E,F）</td>
+</tr>
+<tr>
+<td>d</td>
+<td>与digit相同</td>
+</tr>
+<tr>
+<td>s</td>
+<td>与space相同</td>
+</tr>
+<tr>
+<td>w</td>
+<td>与alnum相同</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>定位点。定位点<code>^</code>匹配目标序列的开头，<code>$</code>可匹配目标序列的末尾。<br> 定位点可匹配目标字符串中的位置，而不匹配字符。</p>
+</li>
+<li><p>转义序列</p>
+<ul>
+<li>文件格式转义。<br> <code>\\</code>、<code>\f</code>、<code>\n</code>、<code>\r</code>、<code>\t</code>和<code>\v</code>,他们分别匹配目标序列中的反斜杠、换页符、回车符、水平制表符合垂直制表符。</li>
+<li>DSW字符转义</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>转义序列</th>
+<th>等效命名类</th>
+<th>默认命名类</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>\d</code></td>
+<td><code>[[:d:]]</code></td>
+<td><code>[[:digit:]]</code></td>
+</tr>
+<tr>
+<td><code>\D</code></td>
+<td><code>[^[:D:]]</code></td>
+<td><code>[^[:digit:]]</code></td>
+</tr>
+<tr>
+<td><code>\s</code></td>
+<td><code>[[:s:]]</code></td>
+<td><code>[[:space:]]</code></td>
+</tr>
+<tr>
+<td><code>\S</code></td>
+<td><code>[^[:S:]]</code></td>
+<td><code>[^[:space:]]</code></td>
+</tr>
+<tr>
+<td><code>\w</code></td>
+<td><code>[[:w:]]</code></td>
+<td><code>[a-zA-Z0-9]</code></td>
+</tr>
+<tr>
+<td><code>\W</code></td>
+<td><code>[^[:W:]]</code></td>
+<td><code>[^a-zA-Z0-9]</code></td>
+</tr>
+</tbody></table>
+<ul>
+<li>8进制数转义<br> <code>\ooo</code>，”ooo”表示三位的八进制数，例如：<code>\101</code> 匹配字符 <code>A</code>。</li>
+<li>16进制数转义<br> <code>\xhh</code>，”hh”表示两位的十六进制数，例如：<code>\x41</code> 匹配字符 <code>A</code>。</li>
+<li>Unicode 转义<br> <code>\uhhhh</code>,”hhhh”表示四位的十六进制数，例如：<code>\u0041</code> 匹配字符<code>A</code>。</li>
+</ul>
+</li>
+</ul>
+<h4 id="3-1、量词"><a href="#3-1、量词" class="headerlink" title="3.1、量词"></a>3.1、量词</h4><p>一个量词指定了要匹配的表达式出现的次数。例如，<code>x&#123;1,1&#125;</code> 表示必须且只能匹配一个字符<code>x</code>，而<code>x&#123;1,3&#125;</code>表示至少匹配一个<code>x</code>，最多匹配三个<code>x</code>。</p>
+<table>
+<thead>
+<tr>
+<th>量词</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>E?</td>
+<td>匹配0次或者1次 <code>E</code>(表达式)，等价于 <code>E&#123;0,1&#125;</code></td>
+</tr>
+<tr>
+<td>E+</td>
+<td>至少匹配一次 <code>E</code>,等价于 <code>E&#123;1,&#125;</code></td>
+</tr>
+<tr>
+<td>E*</td>
+<td>匹配0次或者多次 <code>E</code>,等价于 <code>E&#123;0,&#125;</code></td>
+</tr>
+<tr>
+<td>E{n}</td>
+<td>匹配n次<code>E</code>,等价于<code>E&#123;n,n&#125;</code></td>
+</tr>
+<tr>
+<td>E{n,}</td>
+<td>至少匹配n次<code>E</code></td>
+</tr>
+<tr>
+<td>E{,m}</td>
+<td>至多匹配m次<code>E</code></td>
+</tr>
+<tr>
+<td>E{n,m}</td>
+<td>至少匹配n次，至多匹配m次<code>E</code></td>
+</tr>
+</tbody></table>
+<p>例如：<code>[A-C]+</code>， 可匹配 <code>AAA</code> 、<code>B</code> </p>
+<h4 id="3-2、断言"><a href="#3-2、断言" class="headerlink" title="3.2、断言"></a>3.2、断言</h4><table>
+<thead>
+<tr>
+<th>断言</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>\b</td>
+<td>一个单词的边界</td>
+</tr>
+<tr>
+<td>\B</td>
+<td>一个非单词的边界</td>
+</tr>
+<tr>
+<td>（?=E）</td>
+<td>表达式后面紧跟着E才匹配成功，但不会改名目标序列中匹配的位置</td>
+</tr>
+<tr>
+<td>(?!E)</td>
+<td>表达式后没有紧跟着E才匹配成功，但不会改名目标序列中匹配的位置</td>
+</tr>
+<tr>
+<td>(?:E)</td>
+<td>表达式后面紧跟着E才匹配成功</td>
+</tr>
+</tbody></table>
+<p>例如：<br> <code>\\bmail\\b</code> 匹配的就是一个单词<code>mail</code>。<br> <code>This is a T(?!est)</code>表示如果<code>T</code>后面没有<code>est</code>就匹配，这主要用于替换，后面会有实例。<br> <code>This is a T(?=est)</code>表示如果<code>T</code>后面有<code>est</code>就匹配，这主要用于替换，后面会有实例。 </p>
+<h4 id="3-3、实例"><a href="#3-3、实例" class="headerlink" title="3.3、实例"></a>3.3、实例</h4><p>在C++中使用正则表达式需要用到<code>regex</code>库。<br> 默认情况下，正则表达式遵循ECMAScript语法。</p>
+<p>常用函数：</p>
+<table>
+<thead>
+<tr>
+<th>函数名称</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>regex_match</td>
+<td>将一个字符序列与正则表达式进行匹配。</td>
+</tr>
+<tr>
+<td>regex_search</td>
+<td>查找字符序列中与正则表达式匹配的结果，找到第一个之后就会返回结果并停止查找。</td>
+</tr>
+<tr>
+<td>regex_replace</td>
+<td>替换字符到正交表达式匹配到字符序列的位置。</td>
+</tr>
+</tbody></table>
+<h5 id="3-3-1、检验邮箱格式"><a href="#3-3-1、检验邮箱格式" class="headerlink" title="3.3.1、检验邮箱格式"></a>3.3.1、检验邮箱格式</h5><p>邮箱的一般格式：<a href="mailto:&#x78;&#x78;&#x78;&#64;&#120;&#x78;&#120;&#x2e;&#x63;&#x6f;&#109;">&#x78;&#x78;&#x78;&#64;&#120;&#x78;&#120;&#x2e;&#x63;&#x6f;&#109;</a><br> 验证 <a href="mailto:&#120;&#120;&#120;&#64;&#49;&#54;&#51;&#x2e;&#99;&#x6f;&#x6d;">&#120;&#120;&#120;&#64;&#49;&#54;&#51;&#x2e;&#99;&#x6f;&#x6d;</a> 格式的邮箱。<br> 正则表达式：<code>[[:graph:]]+@163[.]com</code>，这里将<code>.</code>用方括号括起来是因为<code>.</code>在正在表达式中是一个通配符。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;regex&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">string</span> re = <span class="string">&quot;[[:graph:]]+@163[.]com&quot;</span>;</span><br><span class="line">    <span class="function">regex <span class="title">rule</span><span class="params">(re)</span></span>;</span><br><span class="line">    <span class="built_in">string</span> str = <span class="string">&quot;acvds.cpp@163.com&quot;</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; regex_match(str, rule) &lt;&lt; <span class="built_in">endl</span>; <span class="comment">//true</span></span><br><span class="line">    system(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="3-3-2、IP地址匹配"><a href="#3-3-2、IP地址匹配" class="headerlink" title="3.3.2、IP地址匹配"></a>3.3.2、IP地址匹配</h5><p>原理：<br> IP地址是有四个用小数点隔开的十进制整数（0<del>255）组成的，每个整数的位数不确定，以及整数是不同位数的时候，每个位上数字的取值范围也会存在差异，所以需要一一匹配。<br> 当整数是一位的时候，取值是0</del>9,正则表达式<code>\\d</code>(反斜杠需要转义)；<br> 当整数是两位的时候，取值是0<del>9,正则表达式<code>\\d&#123;1,2&#125;</code>;<br> 当整数是三位的时候，当最高位是1的时候，其它两位的取值是0</del>9，正则表达式<code>1\\d&#123;1,2&#125;</code>;当最高位是2的时候，其它两位的取值是0~5，正则表达式<code>2[0-5]&#123;1,2&#125;</code>;<br> 然后用<code>|</code>（或）连接。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;regex&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">string</span> re = <span class="string">&quot;(\\d|\\d&#123;1,2&#125;|(1\\d&#123;1,2&#125;)|2[0-5]&#123;1,2&#125;)[.](\\d|\\d&#123;1,2&#125;|(1\\d&#123;1,2&#125;)|2[0-5]&#123;1,2&#125;)[.](\\d|\\d&#123;1,2&#125;|(1\\d&#123;1,2&#125;)|2[0-5]&#123;1,2&#125;)[.](\\d|\\d&#123;1,2&#125;|(1\\d&#123;1,2&#125;)|2[0-5]&#123;1,2&#125;)&quot;</span>;</span><br><span class="line">    <span class="function">regex <span class="title">rule</span><span class="params">(re)</span></span>;</span><br><span class="line">    <span class="built_in">string</span> str = <span class="string">&quot;100.100.100.0&quot;</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; regex_match(str, rule) &lt;&lt; <span class="built_in">endl</span>; <span class="comment">//true</span></span><br><span class="line">    system(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="3-3-3、英译汉"><a href="#3-3-3、英译汉" class="headerlink" title="3.3.3、英译汉"></a>3.3.3、英译汉</h5><p>这里主要涉及到<code>regex_replace</code>函数的使用。<br> 函数原型：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">basic_string&lt;_Elem, _Traits1, _Alloc1&gt; regex_replace(</span><br><span class="line"><span class="keyword">const</span> basic_string&lt;_Elem, _Traits1, _Alloc1&gt;&amp; _Str,</span><br><span class="line"><span class="keyword">const</span> basic_regex&lt;_Elem, _RxTraits&gt;&amp; _Re,</span><br><span class="line"><span class="keyword">const</span> _Elem *_Ptr,</span><br><span class="line">regex_constants::match_flag_type _Flgs =regex_constants::match_default);<span class="number">12345</span></span><br></pre></td></tr></table></figure>
+
+<p>一共四个参数，第一个参数是目标字符串，第二个参数是正则表达式规则，第三个是用于替换的字符串， 第四个是设置正则表达式如何匹配以及格式化用于替换的字符串。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;regex&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">string</span> re1 = <span class="string">&quot;i&quot;</span>;</span><br><span class="line">    <span class="built_in">string</span> re2 = <span class="string">&quot;love&quot;</span>;</span><br><span class="line">    <span class="built_in">string</span> re3 = <span class="string">&quot;you&quot;</span>;</span><br><span class="line">    <span class="function">regex <span class="title">rule1</span><span class="params">(re1)</span></span>;</span><br><span class="line">    <span class="function">regex <span class="title">rule2</span><span class="params">(re2)</span></span>;</span><br><span class="line">    <span class="function">regex <span class="title">rule3</span><span class="params">(re3)</span></span>;</span><br><span class="line">    <span class="built_in">string</span> str = <span class="string">&quot; i love you.&quot;</span>;</span><br><span class="line">    str = regex_replace(str, rule1, <span class="string">&quot;我&quot;</span>);</span><br><span class="line">    str = regex_replace(str, rule2, <span class="string">&quot;喜欢&quot;</span>);</span><br><span class="line">    str = regex_replace(str, rule3, <span class="string">&quot;你&quot;</span>); </span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; str &lt;&lt; <span class="built_in">endl</span>;<span class="comment">//我喜欢你</span></span><br><span class="line">    system(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="3-3-4、画龙点睛"><a href="#3-3-4、画龙点睛" class="headerlink" title="3.3.4、画龙点睛"></a>3.3.4、画龙点睛</h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;regex&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">string</span> re = <span class="string">&quot;E(?!xpression)&quot;</span>;</span><br><span class="line">    <span class="function">regex <span class="title">rule</span><span class="params">(re)</span></span>;</span><br><span class="line">    <span class="built_in">string</span> str = <span class="string">&quot;Regular E&quot;</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; regex_replace(str,rule,<span class="string">&quot;Expression&quot;</span>) &lt;&lt; <span class="built_in">endl</span>; <span class="comment">//Regular Expression</span></span><br><span class="line">    system(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="3-3-5、捕获"><a href="#3-3-5、捕获" class="headerlink" title="3.3.5、捕获"></a>3.3.5、捕获</h5><p>捕获就是先匹配，然后将匹配结果存储下来。捕获同样是使用上面介绍的那两个函数，仍然区分为整串匹配和子串匹配。</p>
+<p><strong>捕获的步骤：</strong></p>
+<ol>
+<li>模式中一般要有分组（因为捕捉的正是分组匹配的结果）</li>
+<li>定义一个STL容器smatch，用来保存捕捉的结果</li>
+<li>使用<code>reg_search</code>函数匹配，用<code>smatch</code>的实例存储匹配的结果，即完成捕捉。</li>
+<li>使用<code>m.size()</code>，查看捕捉到的个数；使用<code>m.str(i)</code>，查看捕捉到的字符串；【注意：<code>m.str(0)</code>一定是整个正则匹配到的部分，<code>m.str(1)</code>及以后才是分组捕获的结果】</li>
+<li><code>m.prefix().str()</code>获取整个匹配之前的字符串；<code>m.suffix().str()</code>获取整个匹配之后的字符串</li>
+</ol>
+<p><strong>代码：</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">string</span> str;</span><br><span class="line">    <span class="keyword">while</span>(<span class="literal">true</span>)&#123;</span><br><span class="line">        <span class="built_in">cin</span> &gt;&gt; str;</span><br><span class="line">        <span class="function">regex <span class="title">e</span><span class="params">(<span class="string">&quot;([[:w:]]+)@([[:w:]]+)\.com&quot;</span>)</span></span>;</span><br><span class="line">        smatch m;</span><br><span class="line">        <span class="keyword">bool</span> found = regex_search(str, m, e);</span><br><span class="line">        <span class="keyword">if</span>(found)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;m.size() &quot;</span> &lt;&lt; m.size() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;m.size(); ++i)&#123;</span><br><span class="line">                <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;m.str(&quot;</span> &lt;&lt; i &lt;&lt; <span class="string">&quot;): &quot;</span> &lt;&lt; m.str(i) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;m.prefix().str(): &quot;</span> &lt;&lt; m.prefix().str() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;m.suffix().str(): &quot;</span> &lt;&lt; m.suffix().str() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Not Found&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果为：</p>
+<p><img src="https://zhuom-go.github.io/img/Regular_expression/1.png" alt="img"></p>
+<p><img src="https://zhuom-go.github.io/img/Regular_expression/2.png" alt="img"></p>
+<p><strong>补充：</strong></p>
+<ol>
+<li>获取第i个匹配<code>m.str(i)</code>，还有其他等价写法：<code>m[i].str()</code>、<code>*(m.begin() + i)</code></li>
+<li>模式其实可以不分组…这样就只有<code>m.str(0)</code>捕捉到整个串，没有<code>m.str(1)</code>其他的了。</li>
+</ol>
+<h5 id="3-3-6、更高级的捕捉"><a href="#3-3-6、更高级的捕捉" class="headerlink" title="3.3.6、更高级的捕捉"></a>3.3.6、更高级的捕捉</h5><p>由于<code>regex_replace</code>方法<strong>只能捕捉到第一个匹配</strong>，想要捕捉到每一个匹配，以及匹配内的分组，需要使用另外一种方法：</p>
+<p><strong>步骤：</strong></p>
+<ol>
+<li>正则内有分组</li>
+<li>定义迭代器的同时初始化迭代器，使其指向一个<code>smatch</code>实例的数组。</li>
+<li>定义<code>end</code>，标志<code>smatch</code>实例的数组的末尾</li>
+<li>使用迭代器遍历数组</li>
+</ol>
+<p><strong>代码：</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">string</span> str = <span class="string">&quot;boo@gmail.com  boqian@hotmail.com bo_qian@163.com&quot;</span>;</span><br><span class="line">    <span class="function">regex <span class="title">e</span><span class="params">(<span class="string">&quot;([[:w:]]+)@([[:w:]]+)\.com&quot;</span>)</span></span>;</span><br><span class="line">    <span class="function">sregex_iterator <span class="title">pos</span><span class="params">(str.cbegin(), str.cend(), e)</span></span>;</span><br><span class="line">    sregex_iterator end;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(; pos!=end; ++pos)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Matched: &quot;</span> &lt;&lt; pos-&gt;str(<span class="number">0</span>) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;user name: &quot;</span> &lt;&lt; pos-&gt;str(<span class="number">1</span>) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;domain: &quot;</span> &lt;&lt; pos-&gt;str(<span class="number">2</span>) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>补充：</strong></p>
+<ol>
+<li><p>同上，模式中也可以没有分组，这样也就没有<code>pos-&gt;str(1)</code>其他的了。</p>
+</li>
+<li><p>还有一种更高级的捕捉，能够实现一模一样的功能，只是对捕获的结果的组织顺序不相同，它将所有与第一个分组匹配的结果，放在一个容器内。</p>
+<p>运行如下代码，感受一下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">string</span> str = <span class="string">&quot;boo@gmail.com  boqian@hotmail.com bo_qian@163.com&quot;</span>;</span><br><span class="line">    <span class="function">regex <span class="title">e</span><span class="params">(<span class="string">&quot;([[:w:]]+)@([[:w:]]+)\.com&quot;</span>)</span></span>;</span><br><span class="line">    <span class="function">sregex_token_iterator <span class="title">pos</span><span class="params">(str.cbegin(), str.cend(), e, <span class="number">1</span>)</span></span>;<span class="comment">// 表示第一个分组，再换成0、2、-1感受一下</span></span><br><span class="line">    sregex_token_iterator end;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(; pos!=end; ++pos)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Matched: &quot;</span> &lt;&lt; pos-&gt;str() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h5 id="3-3-7、捕捉的同时生成新串"><a href="#3-3-7、捕捉的同时生成新串" class="headerlink" title="3.3.7、捕捉的同时生成新串"></a>3.3.7、捕捉的同时生成新串</h5><p><code>regex_replace</code>方法先完成捕捉，得到类似于：</p>
+<p>大匹配1：分组1、分组2<br> 大匹配2：分组1、分组2<br> 大匹配3：分组1、分组2<br> …</p>
+<p>所以如下代码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">string</span> str = <span class="string">&quot;boo@gmail.com  boqian@hotmail.com bo_qian@163.com&quot;</span>;</span><br><span class="line">    <span class="function">regex <span class="title">e</span><span class="params">(<span class="string">&quot;([[:w:]]+)@([[:w:]]+)\.com&quot;</span>)</span></span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; regex_replace(str, e, <span class="string">&quot;$1 is on $2\n&quot;</span>, regex_constants::format_no_copy); <span class="comment">// 除了捕捉到的组以外，其他的东西均舍弃</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果：<br><img src="https://zhuom-go.github.io/img/Regular_expression/3.png" alt="img"></p>
+<p><strong>补充：</strong></p>
+<ol>
+<li><code>regex_replace</code>除了<code>regex_constants::format_no_copy</code>以外，还有其他flag，如<code>regex_constants::format_first_only</code>表示只取“大匹配1”，而忽略其他。</li>
+<li>flag和flag之间通过<code>|</code>相连接。</li>
+<li><code>regex_match</code>和<code>regex_search</code>也有自己的flag，如用于忽略英文字母大小写的<code>regex_constants::icase</code></li>
+</ol>
+<h3 id="3、随机数"><a href="#3、随机数" class="headerlink" title="3、随机数"></a>3、随机数</h3><h4 id="3-1、rand和srand"><a href="#3-1、rand和srand" class="headerlink" title="3.1、rand和srand"></a>3.1、rand和srand</h4><p>  在C++11标准出来之前，C/C++都依赖于<code>stdlib.h</code>头文件的<code>rand</code>或者<code>srand</code>来生成随机数。</p>
+<p>  其不是真正的随机数，是一个伪随机数，是根据一个数（我们可以称它为种子）为基准以某个递推公式推算出来的一系列数，当这系列数很大的时候，就符合正态公布，从而相当于产生了随机数，但这不是真正的随机数，当计算机正常开机后，这个种子的值是定了的，除非你破坏了系统。</p>
+<ul>
+<li>rand：内部是线性同余实现的，因为周期较长，所以在一定的范围内可看成随机的。系统默认随机种子是1。rand()返回一随机数值的范围在0至RAND_MAX 间。RAND_MAX的范围最少是在32767之间(int)。用unsigned int  双字节是65535，四字节是4294967295的整数范围。0~RAND_MAX每个数字被选中的机率是相同的。</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//函数声明</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">rand</span><span class="params">(<span class="keyword">void</span>)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>srand：srand()用来设置rand()产生随机数时的随机数种子。参数seed必须是个整数，如果每次seed都设相同值，rand()所产生的随机数值每次就会一样。</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//函数声明</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">srand</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">int</span> seed)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>常见用法如下：<ul>
+<li>(rand() % (b - a)) + a ，生成[a, b) 的随机整数</li>
+<li>(rand() % (b - a + 1)) + a ，生成[a,b] 的随机整数</li>
+<li>rand() / double(RAND_MAX) ，生成0～1之间的浮点数</li>
+</ul>
+</li>
+<li>来个测试代码：</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt; </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt; </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;time.h&gt;  </span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;  </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">    srand((<span class="keyword">unsigned</span>)time(<span class="literal">NULL</span>));  </span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>;i++ )  </span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; rand() &lt;&lt; <span class="string">&#x27;\t&#x27;</span>;  </span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-2、新标准随机数"><a href="#3-2、新标准随机数" class="headerlink" title="3.2、新标准随机数"></a>3.2、新标准随机数</h4><p>  有时候程序员需要一些非均匀分布的数，这时候rand就显得不是那么好用，新标准很好解决了这个问题：<code>随机数引擎类</code>和<code>随机数分布类</code>。引擎用来生成随机unsigned整数序列，分布则使用引擎返回服从特定概率分布的随机数。</p>
+<p>  标准库定义了多个随机数引擎类，区别在于性能和随机性质量不同。每个编译器都会指定其中一个作为<code>default_random_engine</code>类型。标准库定义的引擎通用操作如下：</p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Engine e</td>
+<td>默认构造函数，使用该引擎默认的种子</td>
+</tr>
+<tr>
+<td>Engine e(s)</td>
+<td>使用整型值s作为种子</td>
+</tr>
+<tr>
+<td>e.seed(s)</td>
+<td>使用种子s重置引擎的状态</td>
+</tr>
+<tr>
+<td>e.max(), e.min()</td>
+<td>该引擎可生成的最大和最小值</td>
+</tr>
+<tr>
+<td>Engine::result_type</td>
+<td>该引擎生成的unsigned整型类型</td>
+</tr>
+<tr>
+<td>e.discard(u)</td>
+<td>将引擎推进u步，u为unsigned long long类型</td>
+</tr>
+</tbody></table>
+<p>  对于大多数场合，随机数引擎的输出是不能直接使用的，还要配合合适的分布类。均匀分布类为<code>uniform_int_distribution&lt;unsigned&gt;</code>。标准库中的分布类的通用操作如下：</p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Dist d</td>
+<td>默认构造函数</td>
+</tr>
+<tr>
+<td>d(e)</td>
+<td>用相同的引擎e连续生成随机数序列</td>
+</tr>
+<tr>
+<td>d.max(), d.min()</td>
+<td>返回d(e)能生成的最大和最小值</td>
+</tr>
+<tr>
+<td>d.reset()</td>
+<td>重建d的状态，使得随后对d的使用不依赖于d已经生成的值</td>
+</tr>
+</tbody></table>
+<p>  以下为简单测试：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;random&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">//0~9的均匀分布</span></span><br><span class="line">	<span class="function">uniform_int_distribution&lt;<span class="keyword">unsigned</span>&gt; <span class="title">u</span><span class="params">(<span class="number">0</span>,<span class="number">9</span>)</span></span>;</span><br><span class="line">	<span class="comment">//若想生成0~1的double</span></span><br><span class="line">	<span class="comment">//uniform_int_distribution&lt;double&gt; u(0,1);</span></span><br><span class="line">	default_random_engine e;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">size_t</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++)</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; u(e) &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">	<span class="comment">//由于是默认的种子，所以应该都是0 1 7 4 5 2 0 6 6 9</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>  为了生成不同的结果，我们可以通过设置种子，为引擎设置种子的方法有两种方式：在创建引擎对象的时候提供种子，或者调用引擎的seed成员。简单测试如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;random&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	default_random_engine e1; <span class="comment">//默认种子</span></span><br><span class="line">	<span class="function">default_random_engine <span class="title">e2</span><span class="params">(<span class="number">2147483646</span>)</span></span>; <span class="comment">//给定的种子</span></span><br><span class="line">	default_random_engine e3;</span><br><span class="line">	e3.seed(<span class="number">32767</span>); <span class="comment">//调用成员seed</span></span><br><span class="line">	<span class="function">default_random_engine <span class="title">e4</span><span class="params">(<span class="number">32767</span>)</span></span>; <span class="comment">//和e3一样的种子</span></span><br><span class="line">	<span class="function">uniform_int_distribution&lt;<span class="keyword">unsigned</span>&gt; <span class="title">u</span><span class="params">(<span class="number">0</span>,<span class="number">9</span>)</span></span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">size_t</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++)</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; u(e1) &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; u(e2) &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; u(e3) &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; u(e4) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>  除了均匀分布下生成<code>unsigned</code>整数，我们还可以生成不同分布下别的类型的数值。比如<code>u在·生成0~1的double类型值，还有</code>normal_distribution&lt;&gt; n(4,1.5)`生成均值为4，标准差为1.5的正态分布double类型值。</p>
+<h3 id="4、IO库再探"><a href="#4、IO库再探" class="headerlink" title="4、IO库再探"></a>4、IO库再探</h3><h5 id="4-1、格式化输入与输出"><a href="#4-1、格式化输入与输出" class="headerlink" title="4.1、格式化输入与输出"></a>4.1、格式化输入与输出</h5><blockquote>
+<p><strong>控制布尔值的格式</strong></p>
+</blockquote>
+<p><code> boolalpha noboolalpha</code><br><img src="https://zhuom-go.github.io/img/Second_IO/1.png" alt="img"></p>
+<blockquote>
+<p><strong>指定整型值得进制</strong></p>
+</blockquote>
+<p><img src="https://zhuom-go.github.io/img/Second_IO/2.png" alt="img"><br> <img src="https://zhuom-go.github.io/img/Second_IO/23.png" alt="img"></p>
+<blockquote>
+<p><strong>在输出中指出进制</strong></p>
+</blockquote>
+<p><img src="https://zhuom-go.github.io/img/Second_IO/3.png" alt="img"></p>
+<blockquote>
+<p><strong>控制浮点数格式</strong></p>
+</blockquote>
+<p><img src="https://zhuom-go.github.io/img/Second_IO/4.png" alt="img"></p>
+<blockquote>
+<p><strong>指定打印的精度</strong></p>
+</blockquote>
+<p><img src="https://zhuom-go.github.io/img/Second_IO/5.png" alt="img"></p>
+<p><img src="https://zhuom-go.github.io/img/Second_IO/6.png" alt="img"></p>
+<blockquote>
+<p><strong>指定浮点数计数法</strong></p>
+</blockquote>
+<p><img src="https://zhuom-go.github.io/img/Second_IO/7.png" alt="img"></p>
+<blockquote>
+<p><strong>打印小数点</strong></p>
+</blockquote>
+<p><img src="https://zhuom-go.github.io/img/Second_IO/8.png" alt="img"></p>
+<blockquote>
+<p><strong>输出补白</strong></p>
+</blockquote>
+<p><img src="https://zhuom-go.github.io/img/Second_IO/9.png" alt="img"><br><img src="https://zhuom-go.github.io/img/Second_IO/24.png" alt="img"><br><img src="https://zhuom-go.github.io/img/Second_IO/10.png" alt="img"><br> <img src="https://zhuom-go.github.io/img/Second_IO/25.png" alt="img"></p>
+<blockquote>
+<p><strong>控制输入格式</strong></p>
+</blockquote>
+<p><img src="https://zhuom-go.github.io/img/Second_IO/11.png" alt="img"><br><img src="https://zhuom-go.github.io/img/Second_IO/12.png" alt="img"></p>
+<h5 id="4-2、未格式化的输入-输出操作"><a href="#4-2、未格式化的输入-输出操作" class="headerlink" title="4.2、未格式化的输入/输出操作"></a>4.2、未格式化的输入/输出操作</h5><blockquote>
+<p><strong>单字节操作</strong></p>
+</blockquote>
+<p><img src="https://zhuom-go.github.io/img/Second_IO/13.png" alt="img"></p>
+<blockquote>
+<p><strong>将字符放回输入流</strong></p>
+</blockquote>
+<p> <img src="https://zhuom-go.github.io/img/Second_IO/14.png" alt="img"></p>
+<blockquote>
+<p><strong>从输入操作返回的int值</strong></p>
+</blockquote>
+<p> <img src="https://zhuom-go.github.io/img/Second_IO/15.png" alt="img"></p>
+<blockquote>
+<p><strong>多字节操作</strong></p>
+</blockquote>
+<p><img src="https://zhuom-go.github.io/img/Second_IO/16.png" alt="img"><br> <img src="https://zhuom-go.github.io/img/Second_IO/17.png" alt="img"></p>
+<h5 id="4-3、流随机访问"><a href="#4-3、流随机访问" class="headerlink" title="4.3、流随机访问"></a>4.3、流随机访问</h5><p><img src="https://zhuom-go.github.io/img/Second_IO/26.png" alt="img"><br><img src="https://zhuom-go.github.io/img/Second_IO/18.png" alt="img"></p>
+<blockquote>
+<p><strong>seek和tell函数</strong></p>
+</blockquote>
+<p><img src="https://zhuom-go.github.io/img/Second_IO/19.png" alt="img"></p>
+<blockquote>
+<p><strong>只有一个标记</strong></p>
+</blockquote>
+<p><img src="https://zhuom-go.github.io/img/Second_IO/20.png" alt="img"></p>
+<blockquote>
+<p><strong>重定位标记</strong></p>
+</blockquote>
+<p> <img src="https://zhuom-go.github.io/img/Second_IO/21.png" alt="img"></p>
+<blockquote>
+<p><strong>读写同一个文件</strong></p>
+</blockquote>
+<p><img src="https://zhuom-go.github.io/img/Second_IO/21_1.png" alt="img"><br> <img src="https://zhuom-go.github.io/img/Second_IO/22.png" alt="img"></p>
+<ul>
+<li>​                                    </li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/STL/" rel="tag"><i class="fa fa-tag"></i> STL</a>
+              <a href="/tags/tuple/" rel="tag"><i class="fa fa-tag"></i> tuple</a>
+          </div>
+		  <script type="text/javascript">
+          var tagsall=document.getElementsByClassName("post-tags")
+          for (var i = tagsall.length - 1; i >= 0; i--){
+              var tags=tagsall[i].getElementsByTagName("a");
+              for (var j = tags.length - 1; j >= 0; j--) {
+                  var r=Math.floor(Math.random()*75+150);
+                  var g=Math.floor(Math.random()*75+180);
+                  var b=Math.floor(Math.random()*75+100);
+                  tags[j].style.background = "rgb("+r+","+g+","+b+")";
+              }
+          }                        
+          </script>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/11/20/Qt%E6%A7%BD%E5%87%BD%E6%95%B0%E7%BB%91%E5%AE%9A/" rel="prev" title="Qt槽函数使用Lambda绑定">
+      <i class="fa fa-chevron-left"></i> Qt槽函数使用Lambda绑定
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/11/24/using%E7%9A%84%E4%BD%BF%E7%94%A8/" rel="next" title="using的使用">
+      using的使用 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81tuple"><span class="nav-text">1、tuple</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1%E3%80%81make-tuple"><span class="nav-text">1.1、make_tuple</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2%E3%80%81-tie-%E7%94%A8%E4%BA%8E%E6%8B%86%E5%BC%80tuple"><span class="nav-text">1.2、 tie: 用于拆开tuple</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3%E3%80%81forward-as-tuple-%E7%94%A8%E4%BA%8E%E6%8E%A5%E5%8F%97%E5%8F%B3%E5%80%BC%E5%BC%95%E7%94%A8%E6%95%B0%E6%8D%AE%E7%94%9F%E6%88%90tuple"><span class="nav-text">1.3、forward_as_tuple: 用于接受右值引用数据生成tuple</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4%E3%80%81-tuple-cat-%E7%94%A8%E4%BA%8E%E8%BF%9E%E6%8E%A5tuple"><span class="nav-text">1.4、 tuple_cat: 用于连接tuple</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-5%E3%80%81%E5%AF%B9%E4%BA%8E%E8%8E%B7%E5%8F%96tuple%E4%B8%AD%E5%85%83%E7%B4%A0"><span class="nav-text">1.5、对于获取tuple中元素</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-5-1%E3%80%81get-lt-i-gt-%E8%8E%B7%E5%8F%96%E7%AC%AC-i-%E4%B8%AA%E5%85%83%E7%B4%A0%E7%9A%84%E5%80%BC"><span class="nav-text">1.5.1、get&lt;i&gt;: 获取第 i 个元素的值</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-5-2%E3%80%81tuple-element-%E8%8E%B7%E5%8F%96tuple%E4%B8%AD%E7%89%B9%E5%AE%9A%E5%85%83%E7%B4%A0%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-text">1.5.2、tuple_element: 获取tuple中特定元素数据类型</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-5-3%E3%80%81size-%E8%8E%B7%E5%8F%96tuple%E4%B8%AD%E5%85%83%E7%B4%A0%E4%B8%AA%E6%95%B0"><span class="nav-text">1.5.3、size: 获取tuple中元素个数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81bitset"><span class="nav-text">2、bitset</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1%E3%80%81%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="nav-text">2.1、构造函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2%E3%80%81%E7%89%B9%E5%88%AB%E6%B3%A8%E6%84%8F"><span class="nav-text">2.2、特别注意</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3%E3%80%81%E5%8F%AF%E7%94%A8%E7%9A%84%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="nav-text">2.3、可用的操作符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4%E3%80%81%E5%8F%AF%E7%94%A8%E5%87%BD%E6%95%B0"><span class="nav-text">2.4、可用函数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-text">3、正则表达式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1%E3%80%81%E9%87%8F%E8%AF%8D"><span class="nav-text">3.1、量词</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2%E3%80%81%E6%96%AD%E8%A8%80"><span class="nav-text">3.2、断言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3%E3%80%81%E5%AE%9E%E4%BE%8B"><span class="nav-text">3.3、实例</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-1%E3%80%81%E6%A3%80%E9%AA%8C%E9%82%AE%E7%AE%B1%E6%A0%BC%E5%BC%8F"><span class="nav-text">3.3.1、检验邮箱格式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-2%E3%80%81IP%E5%9C%B0%E5%9D%80%E5%8C%B9%E9%85%8D"><span class="nav-text">3.3.2、IP地址匹配</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-3%E3%80%81%E8%8B%B1%E8%AF%91%E6%B1%89"><span class="nav-text">3.3.3、英译汉</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-4%E3%80%81%E7%94%BB%E9%BE%99%E7%82%B9%E7%9D%9B"><span class="nav-text">3.3.4、画龙点睛</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-5%E3%80%81%E6%8D%95%E8%8E%B7"><span class="nav-text">3.3.5、捕获</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-6%E3%80%81%E6%9B%B4%E9%AB%98%E7%BA%A7%E7%9A%84%E6%8D%95%E6%8D%89"><span class="nav-text">3.3.6、更高级的捕捉</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-7%E3%80%81%E6%8D%95%E6%8D%89%E7%9A%84%E5%90%8C%E6%97%B6%E7%94%9F%E6%88%90%E6%96%B0%E4%B8%B2"><span class="nav-text">3.3.7、捕捉的同时生成新串</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81%E9%9A%8F%E6%9C%BA%E6%95%B0"><span class="nav-text">3、随机数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1%E3%80%81rand%E5%92%8Csrand"><span class="nav-text">3.1、rand和srand</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2%E3%80%81%E6%96%B0%E6%A0%87%E5%87%86%E9%9A%8F%E6%9C%BA%E6%95%B0"><span class="nav-text">3.2、新标准随机数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81IO%E5%BA%93%E5%86%8D%E6%8E%A2"><span class="nav-text">4、IO库再探</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#4-1%E3%80%81%E6%A0%BC%E5%BC%8F%E5%8C%96%E8%BE%93%E5%85%A5%E4%B8%8E%E8%BE%93%E5%87%BA"><span class="nav-text">4.1、格式化输入与输出</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-2%E3%80%81%E6%9C%AA%E6%A0%BC%E5%BC%8F%E5%8C%96%E7%9A%84%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E6%93%8D%E4%BD%9C"><span class="nav-text">4.2、未格式化的输入&#x2F;输出操作</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-3%E3%80%81%E6%B5%81%E9%9A%8F%E6%9C%BA%E8%AE%BF%E9%97%AE"><span class="nav-text">4.3、流随机访问</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="zhuoM"
+      src="/img/Logo.png">
+  <p class="site-author-name" itemprop="name">zhuoM</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+	<h3></h3>
+	<h3></h3>
+    <div style="">
+  <canvas id="canvas" style="width:60%;">当前浏览器不支持canvas，请更换浏览器后再试</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //声明canvas的宽高
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //存储时间数据
+    var data = [];
+    //存储运动的小球
+    var balls = [];
+    //设置粒子半径
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //存储时间数字，由十位小时、个位小时、冒号、十位分钟、个位分钟、冒号、十位秒钟、个位秒钟这7个数字组成
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*生成点阵数字*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*更新时钟*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //时间发生变化
+            if(NewData[i] !== data[i]){
+                //将变化的数字值和在data数组中的索引存储在changeNumArray数组中
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //增加小球
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*更新小球状态*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*增加要运动的小球*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*渲染*/
+    function render(){
+        //重置画布宽度，达到清空画布的效果
+        canvas.height = 100;
+        //渲染时钟
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //渲染小球
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //更新时钟
+        updateDigitTime();
+        //更新小球状态
+        updateBalls();
+        //渲染
+        render();
+    },50);
+}
+
+})();
+</script>
+
+	
+    <script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+    <div class="widget-wrap">
+        <h3 class="widget-title"></h3>
+        <div id="myCanvasContainer" class="widget tagcloud">
+            <canvas width="250" height="250" id="resCanvas" style="width=100%">
+                <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Lambda/" rel="tag">Lambda</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/QString/" rel="tag">QString</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Qt/" rel="tag">Qt</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STL/" rel="tag">STL</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Static/" rel="tag">Static</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Template/" rel="tag">Template</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/assign/" rel="tag">assign</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bind/" rel="tag">bind</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/connect/" rel="tag">connect</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/const/" rel="tag">const</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/constexpr/" rel="tag">constexpr</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/explicit/" rel="tag">explicit</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/extern/" rel="tag">extern</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/function/" rel="tag">function</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/initializer-list/" rel="tag">initializer_list</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/move/" rel="tag">move</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/push-bak/" rel="tag">push_bak</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/static-cast/" rel="tag">static_cast</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/string/" rel="tag">string</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tuple/" rel="tag">tuple</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/typedef/" rel="tag">typedef</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/typeid/" rel="tag">typeid</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/using/" rel="tag">using</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vector/" rel="tag">vector</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/" rel="tag">内存分配</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88/" rel="tag">函数指针</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%8B%E5%85%83%E5%87%BD%E6%95%B0/" rel="tag">友元函数</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%B3%E5%80%BC/" rel="tag">右值</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AE%B9%E5%99%A8%E7%AE%97%E6%B3%95/" rel="tag">容器算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" rel="tag">数据结构与算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/" rel="tag">智能指针</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BD%AC%E6%8D%A2/" rel="tag">转换</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BF%AD%E4%BB%A3%E5%99%A8/" rel="tag">迭代器</a><span class="tag-list-count">1</span></li></ul>
+            </canvas>
+         </div>
+    </div>
+
+	
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhuoM</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">150k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">2:17</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/canvas_sphere.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  <script async src="/js/cursor/fireworks.js"></script>
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'qd4EK8z8jRMopJAh5Qy45UMq-gzGzoHsz',
+      appKey     : 'VVPNVnpHyBVnYXp0DTST8vtc',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+<div class="moon-menu">
+  <div class="moon-menu-items">
+    
+    <div class="moon-menu-item" onclick="back2bottom()">
+      <i class='fa fa-chevron-down'></i>    </div>
+    
+    <div class="moon-menu-item" onclick="back2top()">
+      <i class='fa fa-chevron-up'></i>    </div>
+    
+  </div>
+  <div class="moon-menu-button">
+    <svg class="moon-menu-bg">
+      <circle class="moon-menu-cricle" cx="50%" cy="50%" r="44%"></circle>
+      <circle class="moon-menu-border" cx="50%" cy="50%" r="48%"></circle>
+    </svg>
+    <div class="moon-menu-content">
+      <div class="moon-menu-icon"><i class='fas fa-ellipsis-v'></i></div>
+      <div class="moon-menu-text"></div>
+    </div>
+  </div>
+</div><script src="/js/injector.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":150,"height":300,"vOffset":130},"mobile":{"show":true},"log":false,"tagMode":false});</script></body>
+</html>
