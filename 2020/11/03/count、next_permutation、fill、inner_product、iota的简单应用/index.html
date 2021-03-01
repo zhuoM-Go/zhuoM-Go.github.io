@@ -22,17 +22,17 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"sidebar":null,"position":"left         //靠左放置","display":"always       //在所有页面中都显示","offset":"12            //文章间距（只对Pisces | Gemini两种风格有效）","b2t":"false            //返回顶部按钮（只对Pisces | Gemini两种风格有效）","scrollpercent":"true   //返回顶部按钮的百分比"},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":false,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="1、count与count_if函数的使用12345#include &lt; algorithm &gt;#include &lt; vector &gt;vector&lt;int&gt; v;int target_value;int count_num&#x3D;count(v.begin(),v.end(),target_value);">
+  <meta name="description" content="1、count与count_if函数的使用12345#include &lt; algorithm &gt;#include &lt; vector &gt;vector&lt;int&gt; v;int target_value;int count_num&#x3D;count(v.begin(),v.end(),target_value);  通过调用count函数">
 <meta property="og:type" content="article">
 <meta property="og:title" content="count、next_permutation、fill、inner_product、iota的简单应用">
 <meta property="og:url" content="http://example.com/2020/11/03/count%E3%80%81next_permutation%E3%80%81fill%E3%80%81inner_product%E3%80%81iota%E7%9A%84%E7%AE%80%E5%8D%95%E5%BA%94%E7%94%A8/index.html">
 <meta property="og:site_name" content="笔记杂货铺">
-<meta property="og:description" content="1、count与count_if函数的使用12345#include &lt; algorithm &gt;#include &lt; vector &gt;vector&lt;int&gt; v;int target_value;int count_num&#x3D;count(v.begin(),v.end(),target_value);">
+<meta property="og:description" content="1、count与count_if函数的使用12345#include &lt; algorithm &gt;#include &lt; vector &gt;vector&lt;int&gt; v;int target_value;int count_num&#x3D;count(v.begin(),v.end(),target_value);  通过调用count函数">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://zhuom-go.github.io/img/next_permutation%E7%AE%97%E6%B3%95%E5%9B%BE%E7%89%87.jpg">
 <meta property="og:image" content="https://zhuom-go.github.io/img/inner_product%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C.png">
 <meta property="article:published_time" content="2020-11-03T11:58:28.333Z">
-<meta property="article:modified_time" content="2020-11-23T07:55:58.171Z">
+<meta property="article:modified_time" content="2021-03-01T13:53:40.884Z">
 <meta property="article:author" content="zhuoM">
 <meta property="article:tag" content="数据结构与算法">
 <meta name="twitter:card" content="summary">
@@ -230,7 +230,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-23 15:55:58" itemprop="dateModified" datetime="2020-11-23T15:55:58+08:00">2020-11-23</time>
+                <time title="修改时间：2021-03-01 21:53:40" itemprop="dateModified" datetime="2021-03-01T21:53:40+08:00">2021-03-01</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -301,9 +301,7 @@
       
         <h3 id="1、count与count-if函数的使用"><a href="#1、count与count-if函数的使用" class="headerlink" title="1、count与count_if函数的使用"></a>1、count与count_if函数的使用</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt; algorithm &gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt; vector &gt;</span></span></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v;</span><br><span class="line"><span class="keyword">int</span> target_value;</span><br><span class="line"><span class="keyword">int</span> count_num=count(v.begin(),v.end(),target_value);</span><br></pre></td></tr></table></figure>
 
-<a id="more"></a>
-
-<p>通过调用count函数，可以自动计算出在v中符合目标值的个数</p>
+<p>通过调用count函数<a id="more"></a>，可以自动计算出在v中符合目标值的个数</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt; algorithm &gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt; vector &gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">compare</span><span class="params">(<span class="keyword">int</span> value)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> value%<span class="number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">vector</span>&lt; <span class="keyword">int</span> &gt; v;</span><br><span class="line"><span class="keyword">int</span> count_num=count(v.begin(),v.end(),compare);</span><br></pre></td></tr></table></figure>
 <p>通过调用coun_if函数，可以自动计算出在v中符合谓词条件的个数，上述的是返回奇数的个数  </p>
 <h3 id="2、next-permutation-全排列算法"><a href="#2、next-permutation-全排列算法" class="headerlink" title="2、next_permutation(全排列算法)"></a>2、next_permutation(全排列算法)</h3><p><strong>算法思想：</strong><br>1.首先从最尾端开始往前寻找两个相邻元素，令第一元素为<em>i,第二元素为</em>ii,且满足<em>i&lt;<em>ii。<br>2.找到这样一组相邻元素后，再从最尾端开始往前检验，找出第一个大于</em>i的元素，令为</em>j，将i,j元素对调(swap)。<br>3.再将ii之后的所有元素颠倒(reverse)排序。<br>举个实例，假设有序列{0,1,2,3,4}，下图便是套用上述演算法则，一步一步获得“下一个”排列组合。图中只框出那符合“一元素为<em>i,第二元素为</em>ii,且满足*i&lt;*ii ”的相邻两元素，至于寻找适当的j、对调、逆转等操作并未显示出。<br><img src="https://zhuom-go.github.io/img/next_permutation%E7%AE%97%E6%B3%95%E5%9B%BE%E7%89%87.jpg" alt="next_permutation算法图片"></p>
@@ -764,7 +762,7 @@ if(canvas.getContext){
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -774,13 +772,13 @@ if(canvas.getContext){
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">150k</span>
+    <span title="站点总字数">156k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">2:17</span>
+    <span title="站点阅读时长">2:22</span>
 </div>
 
         
