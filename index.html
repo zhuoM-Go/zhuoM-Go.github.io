@@ -192,6 +192,130 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/02/%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/Logo.png">
+      <meta itemprop="name" content="zhuoM">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="笔记杂货铺">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/03/02/%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2/" class="post-title-link" itemprop="url">研究生小知识</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-03-02 17:37:44 / 修改时间：17:37:51" itemprop="dateCreated datePublished" datetime="2021-03-02T17:37:44+08:00">2021-03-02</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E5%AD%A6%E5%B0%8F%E7%9F%A5%E8%AF%86/" itemprop="url" rel="index"><span itemprop="name">数学小知识</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E5%AD%A6%E5%B0%8F%E7%9F%A5%E8%AF%86/%E5%9D%90%E6%A0%87%E8%BD%B4%E6%97%8B%E8%BD%AC%E5%8F%98%E5%8C%96/" itemprop="url" rel="index"><span itemprop="name">坐标轴旋转变化</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2021/03/02/%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2/" class="post-meta-item leancloud_visitors" data-flag-title="研究生小知识" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/03/02/%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/03/02/%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>463</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="1、二维坐标变换"><a href="#1、二维坐标变换" class="headerlink" title="1、二维坐标变换"></a>1、二维坐标变换</h3><p>假设坐标系<code>XOY</code>经过旋转后的坐标系为<code>X&#39;OY&#39;</code>,旋转角为<code>θ</code>,如图所示，则</p>
+<p><img src="https://zhuom-go.github.io/img/%E6%97%8B%E8%BD%AC%E6%97%B6%E7%9A%84%E5%9B%BE%E7%89%87/XY%E6%97%8B%E8%BD%AC.png" alt="img"></p>
+<p>$x’=x<em>cos(θ)+y</em>sin(θ)$<br>$y’=y<em>cos(θ)-x</em>sin(θ)$</p>
+<h3 id="2、三维坐标变换"><a href="#2、三维坐标变换" class="headerlink" title="2、三维坐标变换"></a>2、三维坐标变换</h3><h4 id="2-1、绕X轴旋转"><a href="#2-1、绕X轴旋转" class="headerlink" title="2.1、绕X轴旋转"></a>2.1、绕X轴旋转</h4><p>在三维场景中，当一个点P(x,y,z)绕x轴旋转θ角得到点P’(x’,y’,z’)。由于是绕x轴进行的旋转，因此x坐标保持不变，y和z组成的yoz（o是坐标原点）平面上进行的是一个二维的旋转，于是有：</p>
+<p><strong>右手坐标系：</strong></p>
+<p><img src="https://zhuom-go.github.io/img/%E6%97%8B%E8%BD%AC%E6%97%B6%E7%9A%84%E5%9B%BE%E7%89%87/X%E5%8F%B3.png" alt="img"></p>
+<p><strong>左手坐标系：</strong></p>
+<p><img src="https://zhuom-go.github.io/img/%E6%97%8B%E8%BD%AC%E6%97%B6%E7%9A%84%E5%9B%BE%E7%89%87/X%E5%B7%A6.png" alt="img"></p>
+<h4 id="2-2、绕Y轴旋转"><a href="#2-2、绕Y轴旋转" class="headerlink" title="2.2、绕Y轴旋转"></a>2.2、绕Y轴旋转</h4><p>在三维场景中，当一个点P(x,y,z)绕y轴旋转θ角得到点P’(x’,y’,z’)。由于是绕x轴进行的旋转，因此y坐标保持不变，x和z组成的xoz（o是坐标原点）平面上进行的是一个二维的旋转，于是有：</p>
+<p><strong>右手坐标系：</strong></p>
+<p><img src="https://zhuom-go.github.io/img/%E6%97%8B%E8%BD%AC%E6%97%B6%E7%9A%84%E5%9B%BE%E7%89%87/Y%E5%8F%B3.png" alt="img"></p>
+<p><strong>左手坐标系：</strong></p>
+<p><img src="https://zhuom-go.github.io/img/%E6%97%8B%E8%BD%AC%E6%97%B6%E7%9A%84%E5%9B%BE%E7%89%87/Y%E5%B7%A6.png" alt="img"></p>
+<h4 id="2-3、绕Z轴旋转"><a href="#2-3、绕Z轴旋转" class="headerlink" title="2.3、绕Z轴旋转"></a>2.3、绕Z轴旋转</h4><p>在三维场景中，当一个点P(x,y,z)绕z轴旋转θ角得到点P’(x’,y’,z’)。由于是绕z轴进行的旋转，因此z坐标保持不变，x和y组成的xoy（o是坐标原点）平面上进行的是一个二维的旋转，于是有：</p>
+<p><strong>右手坐标系：</strong></p>
+<p><img src="https://zhuom-go.github.io/img/%E6%97%8B%E8%BD%AC%E6%97%B6%E7%9A%84%E5%9B%BE%E7%89%87/Z%E5%8F%B3.png" alt="img"></p>
+<p><strong>左手坐标系：</strong></p>
+<p><img src="https://zhuom-go.github.io/img/%E6%97%8B%E8%BD%AC%E6%97%B6%E7%9A%84%E5%9B%BE%E7%89%87/Z%E5%B7%A6.png" alt="img"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2020/11/27/Qt%E5%B8%B8%E7%94%A8%E6%8E%A7%E4%BB%B6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -223,7 +347,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-14 16:41:26" itemprop="dateModified" datetime="2020-12-14T16:41:26+08:00">2020-12-14</time>
+                <time title="修改时间：2021-03-02 10:48:18" itemprop="dateModified" datetime="2021-03-02T10:48:18+08:00">2021-03-02</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -285,290 +409,30 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="1、SpinBox"><a href="#1、SpinBox" class="headerlink" title="1、SpinBox"></a>1、SpinBox</h3><blockquote>
-<p><strong>继承于QAbstractSpinBox,主要属性</strong></p>
-</blockquote>
-<table>
-<thead>
-<tr>
-<th>属性名称</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>prefix</code></td>
-<td>数字显示的前缀，例如<code>$$</code></td>
-</tr>
-<tr>
-<td><code>suffix</code></td>
-<td>数字显示的后缀，例如<code>kg</code></td>
-</tr>
-<tr>
-<td><code>minimum</code></td>
-<td>数值显示的最小值</td>
-</tr>
-<tr>
-<td><code>maximun</code></td>
-<td>数值显示的最大值</td>
-</tr>
-<tr>
-<td><code>singlestep</code></td>
-<td>单击调整按钮时，改变的步长</td>
-</tr>
-<tr>
-<td><code>value</code></td>
-<td>当前的值</td>
-</tr>
-<tr>
-<td><code>displayIntegerBase</code></td>
-<td><code>QSpinBox</code>独有，设置显示的进制</td>
-</tr>
-<tr>
-<td><code>decimals</code></td>
-<td><code>QDoubleSpinBox</code>独有，设置显示的小数位</td>
-</tr>
-</tbody></table>
-<p><strong>注意：</strong>前缀和后缀设置后并不会改变</p>
-<h3 id="2、其它输入和显示组件"><a href="#2、其它输入和显示组件" class="headerlink" title="2、其它输入和显示组件"></a>2、其它输入和显示组件</h3><h4 id="2-1、QSlider"><a href="#2-1、QSlider" class="headerlink" title="2.1、QSlider"></a>2.1、QSlider</h4><blockquote>
-<p><strong><code>QSlider、QScrollBar和Qdial</code>都继承于<code>QAbstractSlider，主要特性有：</code></strong></p>
-</blockquote>
-<table>
-<thead>
-<tr>
-<th>属性名称</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>minimun\maximun</code></td>
-<td>设置输入范围的最大值和最小值</td>
-</tr>
-<tr>
-<td><code>singleStep</code></td>
-<td>单步长，当拖动标尺上的滑块时，变化的最小值</td>
-</tr>
-<tr>
-<td><code>pageStep</code></td>
-<td>在<code>Slider</code>上输入焦点，按下<code>PageUp</code>或者<code>PageDn</code>时变化的数值</td>
-</tr>
-<tr>
-<td><code>value</code></td>
-<td>组件当前的值</td>
-</tr>
-<tr>
-<td><code>sliderPosition</code></td>
-<td>滑块的位置，若``tracking<code>为</code>true<code>，该值和</code>value`相等</td>
-</tr>
-<tr>
-<td><code>tracking</code></td>
-<td>设置<code>sliderPosition</code>和value是否相等</td>
-</tr>
-<tr>
-<td><code>orientation</code></td>
-<td>设置<code>Slider</code>的方向，<code>Qt::Horizontal</code>为水平方向，<code>Qt::Vertical</code>为垂直方向</td>
-</tr>
-<tr>
-<td><code>invertedAppearance</code></td>
-<td>显示是否反方向，false时，往左滑动增大</td>
-</tr>
-<tr>
-<td><code>invertedControls</code></td>
-<td>控制键是否反方向，true时，<code>PgUp</code>反而变小</td>
-</tr>
-<tr>
-<td><code>tickPosition</code></td>
-<td>标尺刻度显示位置，<br /><code>QSlider::NoTick</code>     不显示刻度 <br /><code>QSlider::TicksBothSides</code>  在两侧显示刻度 <br /><code>QSlider::TicksAbove</code>     上面显示刻度 <br /><code>QSlider::TicksBelow</code>     下面显示刻度 <br /><code>QSlider::TicksLeft</code>      左边显示刻度 <br /><code>QSlider::TicksRight</code>     右边显示刻度</td>
-</tr>
-<tr>
-<td><code>tickInterval</code></td>
-<td>标尺的间隔值</td>
-</tr>
-</tbody></table>
-<h4 id="2-2、QScrollBar"><a href="#2-2、QScrollBar" class="headerlink" title="2.2、QScrollBar"></a>2.2、QScrollBar</h4><p>继承于<code>QAbstractSlider</code>，无特殊情况</p>
-<h4 id="2-3、QDial"><a href="#2-3、QDial" class="headerlink" title="2.3、QDial"></a>2.3、QDial</h4><p>该器件是仪表盘组件，除以上外还有特有属性：</p>
-<table>
-<thead>
-<tr>
-<th>属性名称</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>notchesVisibel</code></td>
-<td>表盘小刻度是否可见</td>
-</tr>
-<tr>
-<td><code>notchTarget</code></td>
-<td>表盘刻度的像素值</td>
-</tr>
-</tbody></table>
-<h4 id="2-4、QprogressBar"><a href="#2-4、QprogressBar" class="headerlink" title="2.4、QprogressBar"></a>2.4、QprogressBar</h4><p>继承于<code>QWidget,</code>,常用属性有</p>
-<table>
-<thead>
-<tr>
-<th>属性名称</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>minimun\maximun</code></td>
-<td>设置输入范围的最大值和最小值</td>
-</tr>
-<tr>
-<td><code>value</code></td>
-<td>组件当前的值</td>
-</tr>
-<tr>
-<td><code>textVisible</code></td>
-<td>是否显示文字，一般显示百分比</td>
-</tr>
-<tr>
-<td><code>orientation</code></td>
-<td>设置水平或垂直</td>
-</tr>
-<tr>
-<td><code>format</code></td>
-<td>设值文字的显示格式，<code>%p%  显示百分比      %v显示当前值   %m显示总步数</code></td>
-</tr>
-</tbody></table>
-<h4 id="2-5、QLCDNumber"><a href="#2-5、QLCDNumber" class="headerlink" title="2.5、QLCDNumber"></a>2.5、QLCDNumber</h4><p>LCD显示组件，可以设置显示的常用函数</p>
-<table>
-<thead>
-<tr>
-<th>属性名称</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>digitCount</code></td>
-<td>显示的位数，<strong>如果开了小数显示，注意小数点也算一位</strong></td>
-</tr>
-<tr>
-<td><code>smallDecimalPoint</code></td>
-<td>是否有小数点，如果有小数点，就可以显示小数</td>
-</tr>
-<tr>
-<td><code>mode:setDecmode(),setBinmode(),setOctMode,setHexMode()</code></td>
-<td>设置进制</td>
-</tr>
-<tr>
-<td><code>value</code></td>
-<td>显示的值，如果<code>smallDecimalPoint</code>为真才可设置小数</td>
-</tr>
-<tr>
-<td><code>intValue</code></td>
-<td>返回显示的整数部分</td>
-</tr>
-<tr>
-<td><code>display</code></td>
-<td>设置显示的值</td>
-</tr>
-</tbody></table>
-<h3 id="3、时间日期显示组件"><a href="#3、时间日期显示组件" class="headerlink" title="3、时间日期显示组件"></a>3、时间日期显示组件</h3><h4 id="QTimeEdit、QDateEdit、QDateTimeEdit和QCalendarWidget"><a href="#QTimeEdit、QDateEdit、QDateTimeEdit和QCalendarWidget" class="headerlink" title="QTimeEdit、QDateEdit、QDateTimeEdit和QCalendarWidget"></a>QTimeEdit、QDateEdit、QDateTimeEdit和QCalendarWidget</h4><p>显示时间的组件，显示日期的组件和显示时间和日期的组件</p>
-<table>
-<thead>
-<tr>
-<th>属性名称</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>datetime</code></td>
-<td>日期时间</td>
-</tr>
-<tr>
-<td><code>date</code></td>
-<td>日期</td>
-</tr>
-<tr>
-<td><code>time</code></td>
-<td>时间</td>
-</tr>
-<tr>
-<td><code>maximunDateTime</code>和<code>minimumDateTime</code></td>
-<td>最大、最小日期时间</td>
-</tr>
-<tr>
-<td><code>maximunDate</code>和``minimumDate`</td>
-<td>最大、最小日期</td>
-</tr>
-<tr>
-<td><code>maximunTime</code>和<code>minimumTime</code></td>
-<td>最大、最小时间</td>
-</tr>
-<tr>
-<td><code>currentSection</code></td>
-<td>当前输入光标所在的段，他把dateTime分成几个段，如QDateTimeEdit::YearSection，表示年段</td>
-</tr>
-<tr>
-<td><code>currentSectionIndex</code></td>
-<td>用序号表示段</td>
-</tr>
-<tr>
-<td><code>calendarPopup</code></td>
-<td>是否弹出日历选择框，是的时候将会产生类似于<code>QComboxBox</code>的下拉框，选择日期</td>
-</tr>
-<tr>
-<td><code>displayFormat</code></td>
-<td>显示的格式</td>
-</tr>
-<tr>
-<td><code>QdateTime::currentDateTime</code></td>
-<td>获得当前时间</td>
-</tr>
-<tr>
-<td><code>QdateTime::fromString</code></td>
-<td>把时间转换成字符</td>
-</tr>
-</tbody></table>
-<h3 id="4、QComboBox"><a href="#4、QComboBox" class="headerlink" title="4、QComboBox"></a>4、QComboBox</h3><p>其除了可以插入每个项外，每个项还可以关联看不见的数据，常用函数如下所示</p>
-<table>
-<thead>
-<tr>
-<th>属性名称</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>addItem</code></td>
-<td>添加项目，其可以<code>addItem(&quot;zhuo&quot;,20)</code>，其中“zhuo”是看得到的项目，20是绑定<code>zhuo</code>的值，类似于<code>pair</code></td>
-</tr>
-<tr>
-<td><code>currentIndex</code></td>
-<td>当前项的序号</td>
-</tr>
-<tr>
-<td><code>currentText</code></td>
-<td>当前项的文字</td>
-</tr>
-<tr>
-<td><code>currentData</code></td>
-<td>当前项的绑定数据</td>
-</tr>
-<tr>
-<td><code>itemText</code></td>
-<td>返回项的名字</td>
-</tr>
-<tr>
-<td><code>itemData</code></td>
-<td>返回项的绑定数据</td>
-</tr>
-<tr>
-<td><code>int count</code></td>
-<td>返回项的个数</td>
-</tr>
-</tbody></table>
-<h3 id="5、QPlainTextEdit"><a href="#5、QPlainTextEdit" class="headerlink" title="5、QPlainTextEdit"></a>5、QPlainTextEdit</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">QString str=ui-&gt;plainTextEdit-&gt;tostring();  <span class="comment">//可以获得全部的文本</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QPlainTextEdit&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QTextBlock&gt;</span></span></span><br><span class="line"><span class="comment">//获得每一行的文本</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Widget::on_pushButton_clicked</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    QTextDocument *document=ui-&gt;plainTextEdit-&gt;document();   <span class="comment">//获得文件</span></span><br><span class="line">    <span class="keyword">int</span> line=document-&gt;blockCount();  <span class="comment">//确定行数</span></span><br><span class="line">    ui-&gt;textEdit-&gt;clear();</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;line;i++)</span><br><span class="line">    &#123;</span><br><span class="line">       QTextBlock linestr= document-&gt;findBlockByNumber(i);     <span class="comment">//查找每一行，并把行转换为String</span></span><br><span class="line">       ui-&gt;textEdit-&gt;append(linestr.text());</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="6、QlistWidget"><a href="#6、QlistWidget" class="headerlink" title="6、QlistWidget"></a>6、QlistWidget</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Widget::on_pushButton_2_clicked</span><span class="params">()</span>  <span class="comment">//插入项，并可以设置项的属性</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> rows=ui-&gt;listWidget-&gt;count();</span><br><span class="line">    QListWidgetItem *item=<span class="keyword">new</span> QListWidgetItem(QString(<span class="string">&quot;第%1行&quot;</span>).arg(rows));</span><br><span class="line">    item-&gt;setFlags(Qt::ItemIsSelectable |Qt::ItemIsDragEnabled |Qt::ItemIsDropEnabled |Qt::ItemIsEditable);</span><br><span class="line">    ui-&gt;listWidget-&gt;addItem(item);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Widget::on_pushButton_3_clicked</span><span class="params">()</span>  <span class="comment">//遍历项</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> rows=ui-&gt;listWidget-&gt;count();</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;rows;i++)</span><br><span class="line">        qDebug()&lt;&lt;ui-&gt;listWidget-&gt;item(i)-&gt;text();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Widget::on_pushButton_4_clicked</span><span class="params">()</span>  <span class="comment">//删除项时，takeItem只是移出，delete后才是删除</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> rows=ui-&gt;listWidget-&gt;count();</span><br><span class="line">    QListWidgetItem *i=ui-&gt;listWidget-&gt;takeItem(rows<span class="number">-1</span>);</span><br><span class="line">    <span class="keyword">delete</span> i;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="7、QToolButton"><a href="#7、QToolButton" class="headerlink" title="7、QToolButton"></a>7、QToolButton</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">QMenu *menu=<span class="keyword">new</span> QMenu();           <span class="comment">//创建菜单</span></span><br><span class="line">menu-&gt;addAction(ui-&gt;actCopy);      <span class="comment">//加入action</span></span><br><span class="line">menu-&gt;addAction(ui-&gt;actCut);</span><br><span class="line">menu-&gt;addAction(ui-&gt;actNew);</span><br><span class="line"><span class="comment">//设置ToolButton的模式，InstantPopup的话点击按钮弹出下拉框，不会执行默认的action,MenuButtonPopup点击按钮则会执行</span></span><br><span class="line">ui-&gt;toolButton-&gt;setPopupMode(QToolButton::InstantPopup);  </span><br><span class="line"><span class="comment">//设置按钮的样式</span></span><br><span class="line">ui-&gt;toolButton-&gt;setToolButtonStyle(Qt::ToolButtonStyle::ToolButtonTextBesideIcon);</span><br><span class="line"><span class="comment">//设置默认的action</span></span><br><span class="line">ui-&gt;toolButton-&gt;setDefaultAction(ui-&gt;actBold);</span><br><span class="line"><span class="comment">//加入菜单</span></span><br><span class="line">ui-&gt;toolButton-&gt;setMenu(menu);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="8、QTreeWidget"><a href="#8、QTreeWidget" class="headerlink" title="8、QTreeWidget"></a>8、QTreeWidget</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;mainwindow.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;ui_mainwindow.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QDebug&gt;</span></span></span><br><span class="line"></span><br><span class="line">MainWindow::MainWindow(QWidget *parent) :</span><br><span class="line">    QMainWindow(parent),</span><br><span class="line">    ui(<span class="keyword">new</span> Ui::MainWindow)</span><br><span class="line">&#123;</span><br><span class="line">    ui-&gt;setupUi(<span class="keyword">this</span>);</span><br><span class="line">    Init_UI();</span><br><span class="line">    connect(ui-&gt;treeWidget,&amp;QTreeWidget::itemClicked,<span class="keyword">this</span>,[=](QTreeWidgetItem *item)&#123;</span><br><span class="line">       <span class="comment">//qDebug()&lt;&lt;item-&gt;data(0,Qt::UserRole).toString();  查询data的值</span></span><br><span class="line">       <span class="comment">// int itemType=item-&gt;type(); 这个可以用来判断你点击的是哪个item，type的值就是你一开始new的时候写进去的值</span></span><br><span class="line">      </span><br><span class="line">      </span><br><span class="line">      <span class="comment">//删除item时，要先获得parent，然后调用remove，但是只是移除而已，需要手动删除</span></span><br><span class="line">        <span class="keyword">auto</span> parent=item-&gt;parent();</span><br><span class="line">        parent-&gt;removeChild(item);</span><br><span class="line">        <span class="keyword">delete</span> item;</span><br><span class="line"></span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">MainWindow::~MainWindow()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">delete</span> ui;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">MainWindow::Init_UI</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//ui-&gt;treeWidget-&gt;headerItem()-&gt;setText(0,&quot;1&quot;);         该方法也可以加入列名称</span></span><br><span class="line">    <span class="comment">/*ui-&gt;treeWidget-&gt;headerItem()-&gt;setText(1,&quot;2&quot;);</span></span><br><span class="line"><span class="comment">    ui-&gt;treeWidget-&gt;headerItem()-&gt;setText(2,&quot;3&quot;);*/</span></span><br><span class="line">    QStringList strlist;</span><br><span class="line">    strlist&lt;&lt;<span class="string">&quot; 1 &quot;</span>&lt;&lt;<span class="string">&quot; 2 &quot;</span>&lt;&lt;<span class="string">&quot; 3 &quot;</span>;</span><br><span class="line">    ui-&gt;treeWidget-&gt;setHeaderLabels(strlist);    <span class="comment">//加入列的名称</span></span><br><span class="line">  </span><br><span class="line">    QTreeWidgetItem *item21=<span class="keyword">new</span> QTreeWidgetItem(<span class="number">1</span>);<span class="comment">//建议这样new，后面要判断时可以用type来判断点击是哪一个</span></span><br><span class="line">    item21-&gt;setText(<span class="number">0</span>,<span class="string">&quot;1&quot;</span>);<span class="comment">//设置名称</span></span><br><span class="line">    item21-&gt;setCheckState(<span class="number">0</span>,Qt::CheckState::Unchecked);<span class="comment">//设置复选框为未选中状态</span></span><br><span class="line">    item21-&gt;setFlags(Qt::ItemFlag::ItemIsEnabled | Qt::ItemFlag::ItemIsUserCheckable | Qt::ItemFlag::ItemIsSelectable);</span><br><span class="line">    ui-&gt;treeWidget-&gt;addTopLevelItem(item21);  <span class="comment">//加入到顶层item</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    QTreeWidgetItem *item2=<span class="keyword">new</span> QTreeWidgetItem(<span class="number">11</span>);</span><br><span class="line">    item2-&gt;setText(<span class="number">0</span>,<span class="string">&quot;1_1&quot;</span>);</span><br><span class="line">    item2-&gt;setCheckState(<span class="number">0</span>,Qt::CheckState::Unchecked);</span><br><span class="line">    item2-&gt;setFlags(Qt::ItemFlag::ItemIsEnabled | Qt::ItemFlag::ItemIsUserCheckable | Qt::ItemFlag::ItemIsSelectable);</span><br><span class="line">    ui-&gt;treeWidget-&gt;itemAt(<span class="number">0</span>,<span class="number">0</span>)-&gt;addChild(item2);   <span class="comment">//加入到顶层item的子目录</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    QTreeWidgetItem *item3=<span class="keyword">new</span> QTreeWidgetItem(<span class="number">111</span>);</span><br><span class="line">    item3-&gt;setText(<span class="number">0</span>,<span class="string">&quot;1_1_1&quot;</span>);</span><br><span class="line">    item3-&gt;setCheckState(<span class="number">0</span>,Qt::CheckState::Unchecked);</span><br><span class="line">    item3-&gt;setFlags(Qt::ItemFlag::ItemIsEnabled | Qt::ItemFlag::ItemIsUserCheckable | Qt::ItemFlag::ItemIsSelectable);</span><br><span class="line">    item3-&gt;setData(<span class="number">0</span>,Qt::UserRole,<span class="string">&quot;5666&quot;</span>);  <span class="comment">//对该节点另外绑定一个值，当值看不见，需要时可以用data来查询</span></span><br><span class="line">    ui-&gt;treeWidget-&gt;itemAt(<span class="number">0</span>,<span class="number">0</span>)-&gt;child(<span class="number">0</span>)-&gt;addChild(item3);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    QTreeWidgetItem *item4=<span class="keyword">new</span> QTreeWidgetItem(<span class="number">112</span>);</span><br><span class="line">    item4-&gt;setText(<span class="number">0</span>,<span class="string">&quot;1_1_2&quot;</span>);</span><br><span class="line">    item4-&gt;setCheckState(<span class="number">0</span>,Qt::CheckState::Unchecked);</span><br><span class="line">    item4-&gt;setFlags(Qt::ItemFlag::ItemIsEnabled | Qt::ItemFlag::ItemIsUserCheckable | Qt::ItemFlag::ItemIsSelectable);</span><br><span class="line">    ui-&gt;treeWidget-&gt;itemAt(<span class="number">0</span>,<span class="number">0</span>)-&gt;child(<span class="number">0</span>)-&gt;addChild(item4);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">MainWindow::on_pushButton_clicked</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;ui-&gt;treeWidget-&gt;topLevelItemCount();i++)</span><br><span class="line">    &#123;</span><br><span class="line">        change_item(ui-&gt;treeWidget-&gt;topLevelItem(i));  <span class="comment">//遍历每一列</span></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">MainWindow::change_item</span><span class="params">(QTreeWidgetItem *item)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> iCount=item-&gt;childCount();</span><br><span class="line">    item-&gt;setText(<span class="number">0</span>,item-&gt;text(<span class="number">0</span>)+<span class="string">&quot;*&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span>(iCount&gt;<span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;iCount;i++)</span><br><span class="line">            change_item(item-&gt;child(i));  <span class="comment">//递归遍历每一颗树</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="9、QTableWidget"><a href="#9、QTableWidget" class="headerlink" title="9、QTableWidget"></a>9、QTableWidget</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;widget.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;ui_widget.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QTableWidget&gt;</span></span></span><br><span class="line"></span><br><span class="line">Widget::Widget(QWidget *parent) :</span><br><span class="line">    QWidget(parent),</span><br><span class="line">    ui(<span class="keyword">new</span> Ui::Widget)</span><br><span class="line">&#123;</span><br><span class="line">    ui-&gt;setupUi(<span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Widget::~Widget()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">delete</span> ui;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Widget::on_pushButton_clicked</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    QTableWidgetItem *head;</span><br><span class="line">    QStringList <span class="built_in">list</span>;</span><br><span class="line">    <span class="built_in">list</span>&lt;&lt;&quot;姓 名&quot;&lt;&lt;&quot;年龄&quot;&lt;&lt;&quot;是否党员&quot;;</span><br><span class="line">    ui-&gt;tableWidget-&gt;setHorizontalHeaderLabels(<span class="built_in">list</span>);</span><br><span class="line">    ui-&gt;tableWidget-&gt;setColumnCount(<span class="built_in">list</span>.count());  <span class="comment">//设置列的数量，必须设置，否则不显示表头</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;ui-&gt;tableWidget-&gt;columnCount();i++)</span><br><span class="line">    &#123;</span><br><span class="line">        head=<span class="keyword">new</span> QTableWidgetItem(<span class="built_in">list</span>.at(i));</span><br><span class="line">        QFont font;</span><br><span class="line">        font.setBold(<span class="literal">true</span>);</span><br><span class="line">        font.setPointSize(<span class="number">12</span>);</span><br><span class="line">        head-&gt;setFont(font);</span><br><span class="line">        head-&gt;setTextColor(QColor(i*<span class="number">30</span>,i*<span class="number">5</span>,i*<span class="number">70</span>));</span><br><span class="line">        ui-&gt;tableWidget-&gt;setHorizontalHeaderItem(i,head);  <span class="comment">//设置行的样式</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Widget::on_pushButton_2_clicked</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ui-&gt;tableWidget-&gt;setRowCount(ui-&gt;spinBox-&gt;text().toInt());  <span class="comment">//设置行的数量</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Widget::on_pushButton_3_clicked</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ui-&gt;tableWidget-&gt;clearContents();<span class="comment">//清除工作的内容，不清除表头</span></span><br><span class="line">    ui-&gt;tableWidget-&gt;setRowCount(<span class="number">3</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">3</span>;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        QTableWidgetItem *item=<span class="keyword">new</span> QTableWidgetItem(QString(<span class="string">&quot;李%1&quot;</span>).arg(i+<span class="number">1</span>),ID);</span><br><span class="line">        item-&gt;setData(Qt::UserRole,QVariant(<span class="number">2017</span>+i));</span><br><span class="line">        ui-&gt;tableWidget-&gt;setItem(i,<span class="number">0</span>,item);</span><br><span class="line">        item=<span class="keyword">new</span> QTableWidgetItem(QString(<span class="string">&quot;%1&quot;</span>).arg(i+<span class="number">20</span>),AGE);</span><br><span class="line">        ui-&gt;tableWidget-&gt;setItem(i,<span class="number">1</span>,item);</span><br><span class="line">        item=<span class="keyword">new</span> QTableWidgetItem(<span class="string">&quot;党员&quot;</span>,TK);</span><br><span class="line">        <span class="keyword">if</span>(i%<span class="number">2</span>)</span><br><span class="line">            item-&gt;setCheckState(Qt::Checked);</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            item-&gt;setCheckState(Qt::Unchecked);</span><br><span class="line">        ui-&gt;tableWidget-&gt;setItem(i,<span class="number">2</span>,item);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Widget::on_pushButton_4_clicked</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> row=ui-&gt;tableWidget-&gt;currentRow()+<span class="number">1</span>;</span><br><span class="line">    ui-&gt;tableWidget-&gt;insertRow(row);</span><br><span class="line">    QTableWidgetItem *item=<span class="keyword">new</span> QTableWidgetItem(QString(<span class="string">&quot;李%1&quot;</span>).arg(row+<span class="number">1</span>));</span><br><span class="line">    ui-&gt;tableWidget-&gt;setItem(row,<span class="number">0</span>,item);</span><br><span class="line">    item=<span class="keyword">new</span> QTableWidgetItem(QString(<span class="string">&quot;%1&quot;</span>).arg(row+<span class="number">20</span>));</span><br><span class="line">    ui-&gt;tableWidget-&gt;setItem(row,<span class="number">1</span>,item);</span><br><span class="line">    item=<span class="keyword">new</span> QTableWidgetItem(<span class="string">&quot;党员&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span>(row%<span class="number">2</span>)</span><br><span class="line">        item-&gt;setCheckState(Qt::Checked);</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        item-&gt;setCheckState(Qt::Unchecked);</span><br><span class="line">    ui-&gt;tableWidget-&gt;setItem(row,<span class="number">2</span>,item);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Widget::on_pushButton_6_clicked</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> row=ui-&gt;tableWidget-&gt;rowCount();</span><br><span class="line">    ui-&gt;tableWidget-&gt;insertRow(row);</span><br><span class="line">    QTableWidgetItem *item=<span class="keyword">new</span> QTableWidgetItem(QString(<span class="string">&quot;李%1&quot;</span>).arg(row+<span class="number">1</span>),ID);<span class="comment">//设置每个数据的类型，方便后面的查找</span></span><br><span class="line">    item-&gt;setData(Qt::UserRole,QVariant(<span class="number">110022</span>));  <span class="comment">//数据绑定另一个数值，可以直接查看</span></span><br><span class="line">    ui-&gt;tableWidget-&gt;setItem(row,<span class="number">0</span>,item);</span><br><span class="line">    item=<span class="keyword">new</span> QTableWidgetItem(QString(<span class="string">&quot;%1&quot;</span>).arg(row+<span class="number">20</span>),AGE);</span><br><span class="line">    ui-&gt;tableWidget-&gt;setItem(row,<span class="number">1</span>,item);</span><br><span class="line">    item=<span class="keyword">new</span> QTableWidgetItem(<span class="string">&quot;党员&quot;</span>,TK);</span><br><span class="line">    <span class="keyword">if</span>(row%<span class="number">2</span>)</span><br><span class="line">        item-&gt;setCheckState(Qt::Checked);</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        item-&gt;setCheckState(Qt::Unchecked);</span><br><span class="line">    ui-&gt;tableWidget-&gt;setItem(row,<span class="number">2</span>,item);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Widget::on_pushButton_5_clicked</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> row=ui-&gt;tableWidget-&gt;currentRow();</span><br><span class="line">    ui-&gt;tableWidget-&gt;removeRow(row);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Widget::on_pushButton_8_clicked</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ui-&gt;tableWidget-&gt;resizeRowsToContents();<span class="comment">//行自动适应</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Widget::on_pushButton_9_clicked</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ui-&gt;tableWidget-&gt;resizeColumnsToContents();<span class="comment">//列自动适应</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Widget::on_pushButton_7_clicked</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ui-&gt;plainTextEdit-&gt;clear();</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;ui-&gt;tableWidget-&gt;rowCount();i++)</span><br><span class="line">    &#123;</span><br><span class="line">        QString str=QString(<span class="string">&quot;%1&quot;</span>).arg(i)+<span class="string">&quot;  &quot;</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;ui-&gt;tableWidget-&gt;columnCount();j++)</span><br><span class="line">        &#123;</span><br><span class="line">            QTableWidgetItem *item=ui-&gt;tableWidget-&gt;item(i,j);</span><br><span class="line">            <span class="keyword">if</span>(item-&gt;type()==ID)</span><br><span class="line">                str+=(item-&gt;text()+<span class="string">&quot;  &quot;</span>)+item-&gt;data(Qt::UserRole).toString();</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (item-&gt;type()==TK) &#123;</span><br><span class="line">                <span class="keyword">if</span>(item-&gt;checkState()==Qt::Checked)</span><br><span class="line">                str+=<span class="string">&quot;是&quot;</span>+(item-&gt;text()+<span class="string">&quot;  &quot;</span>);</span><br><span class="line">                <span class="keyword">else</span> &#123;</span><br><span class="line">                    str+=<span class="string">&quot;不是&quot;</span>+(item-&gt;text()+<span class="string">&quot;  &quot;</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                str+=(item-&gt;text()+<span class="string">&quot;  &quot;</span>);</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        str+=<span class="string">&quot;\n&quot;</span>;</span><br><span class="line">        ui-&gt;plainTextEdit-&gt;appendPlainText(str);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Widget::on_checkBox_stateChanged</span><span class="params">(<span class="keyword">int</span> arg1)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(arg1==<span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        ui-&gt;tableWidget-&gt;setEditTriggers(QAbstractItemView::DoubleClicked |QAbstractItemView::SelectedClicked);<span class="comment">//设置表格可编辑</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        ui-&gt;tableWidget-&gt;setEditTriggers(QAbstractItemView::NoEditTriggers);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Widget::on_checkBox_2_stateChanged</span><span class="params">(<span class="keyword">int</span> arg1)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(arg1==<span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        ui-&gt;tableWidget-&gt;setAlternatingRowColors(<span class="literal">true</span>);<span class="comment">//设置行间隔颜色表示</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        ui-&gt;tableWidget-&gt;setAlternatingRowColors(<span class="literal">false</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Widget::on_checkBox_6_stateChanged</span><span class="params">(<span class="keyword">int</span> arg1)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(arg1==<span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        ui-&gt;tableWidget-&gt;horizontalHeader()-&gt;setVisible(<span class="literal">true</span>); <span class="comment">//设置列表头可见</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">       ui-&gt;tableWidget-&gt;horizontalHeader()-&gt;setVisible(<span class="literal">false</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Widget::on_checkBox_5_stateChanged</span><span class="params">(<span class="keyword">int</span> arg1)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(arg1==<span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        ui-&gt;tableWidget-&gt;verticalHeader()-&gt;setVisible(<span class="literal">true</span>);<span class="comment">//设置行表头可见</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">       ui-&gt;tableWidget-&gt;verticalHeader()-&gt;setVisible(<span class="literal">false</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Widget::on_radioButton_clicked</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ui-&gt;tableWidget-&gt;setSelectionBehavior(QAbstractItemView::SelectRows);  <span class="comment">//设置选中时是行选中，还是单元格选中</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Widget::on_radioButton_2_clicked</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ui-&gt;tableWidget-&gt;setSelectionBehavior(QAbstractItemView::SelectItems);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
+          <h3 id="1、SpinBox"><a href="#1、SpinBox" class="headerlink" title="1、SpinBox"></a>1、SpinBox</h3>
+          <div class="home-post-tags">
+              <a href="/" rel="tag"></a>
+              <script type="text/javascript">
+              var tagsall=document.getElementsByClassName("home-post-tags")
+              for (var i = tagsall.length - 1; i >= 0; i--){
+                  var tags=tagsall[i].getElementsByTagName("a");
+                  for (var j = tags.length - 1; j >= 0; j--) {
+                      var r=Math.floor(Math.random()*255);
+                      var g=Math.floor(Math.random()*255);
+                      var b=Math.floor(Math.random()*255);
+                      tags[j].style.background = "rgb("+r+","+g+","+b+")";
+                  }
+              }
+              </script>
+          </div>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/11/27/Qt%E5%B8%B8%E7%94%A8%E6%8E%A7%E4%BB%B6/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1665,142 +1529,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2020/11/17/C++%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E5%87%BD%E6%95%B0%EF%BC%9A%E5%B0%86%E5%BD%93%E5%89%8D%E7%B1%BB%E7%9A%84%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E4%B8%BA%E5%85%B6%E5%AE%83%E7%B1%BB%E5%9E%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/img/Logo.png">
-      <meta itemprop="name" content="zhuoM">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="笔记杂货铺">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/11/17/C++%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E5%87%BD%E6%95%B0%EF%BC%9A%E5%B0%86%E5%BD%93%E5%89%8D%E7%B1%BB%E7%9A%84%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E4%B8%BA%E5%85%B6%E5%AE%83%E7%B1%BB%E5%9E%8B/" class="post-title-link" itemprop="url">类类型转换</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-11-17 11:59:03" itemprop="dateCreated datePublished" datetime="2020-11-17T11:59:03+08:00">2020-11-17</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-23 16:13:32" itemprop="dateModified" datetime="2020-11-23T16:13:32+08:00">2020-11-23</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/%E5%B8%B8%E8%A7%84%E8%AF%AD%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">常规语法</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2020/11/17/C++%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E5%87%BD%E6%95%B0%EF%BC%9A%E5%B0%86%E5%BD%93%E5%89%8D%E7%B1%BB%E7%9A%84%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E4%B8%BA%E5%85%B6%E5%AE%83%E7%B1%BB%E5%9E%8B/" class="post-meta-item leancloud_visitors" data-flag-title="类类型转换" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/11/17/C++%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E5%87%BD%E6%95%B0%EF%BC%9A%E5%B0%86%E5%BD%93%E5%89%8D%E7%B1%BB%E7%9A%84%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E4%B8%BA%E5%85%B6%E5%AE%83%E7%B1%BB%E5%9E%8B/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/11/17/C++%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E5%87%BD%E6%95%B0%EF%BC%9A%E5%B0%86%E5%BD%93%E5%89%8D%E7%B1%BB%E7%9A%84%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E4%B8%BA%E5%85%B6%E5%AE%83%E7%B1%BB%E5%9E%8B/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>2.5k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>转换构造函数能够将其它类型转换为当前类类型（例如将 double 类型转换为 Complex 类型），但是不能反过来将当前类类型转换为其它类型（例如将 Complex 类型转换为 double 类型）。
-          <div class="home-post-tags">
-              <a href="/" rel="tag"></a>
-              <a href="/" rel="tag"></a>
-              <script type="text/javascript">
-              var tagsall=document.getElementsByClassName("home-post-tags")
-              for (var i = tagsall.length - 1; i >= 0; i--){
-                  var tags=tagsall[i].getElementsByTagName("a");
-                  for (var j = tags.length - 1; j >= 0; j--) {
-                      var r=Math.floor(Math.random()*255);
-                      var g=Math.floor(Math.random()*255);
-                      var b=Math.floor(Math.random()*255);
-                      tags[j].style.background = "rgb("+r+","+g+","+b+")";
-                  }
-              }
-              </script>
-          </div>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/11/17/C++%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E5%87%BD%E6%95%B0%EF%BC%9A%E5%B0%86%E5%BD%93%E5%89%8D%E7%B1%BB%E7%9A%84%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E4%B8%BA%E5%85%B6%E5%AE%83%E7%B1%BB%E5%9E%8B/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1872,20 +1600,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-count">28</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-count">34</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -2168,7 +1896,7 @@ if(canvas.getContext){
         <h3 class="widget-title"></h3>
         <div id="myCanvasContainer" class="widget tagcloud">
             <canvas width="250" height="250" id="resCanvas" style="width=100%">
-                <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Lambda/" rel="tag">Lambda</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/QString/" rel="tag">QString</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Qt/" rel="tag">Qt</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STL/" rel="tag">STL</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Static/" rel="tag">Static</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Template/" rel="tag">Template</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/assign/" rel="tag">assign</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bind/" rel="tag">bind</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/connect/" rel="tag">connect</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/const/" rel="tag">const</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/constexpr/" rel="tag">constexpr</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/explicit/" rel="tag">explicit</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/extern/" rel="tag">extern</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/function/" rel="tag">function</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/initializer-list/" rel="tag">initializer_list</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/move/" rel="tag">move</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/push-bak/" rel="tag">push_bak</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/static-cast/" rel="tag">static_cast</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/string/" rel="tag">string</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tuple/" rel="tag">tuple</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/typedef/" rel="tag">typedef</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/typeid/" rel="tag">typeid</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/using/" rel="tag">using</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vector/" rel="tag">vector</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/" rel="tag">内存分配</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88/" rel="tag">函数指针</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%8B%E5%85%83%E5%87%BD%E6%95%B0/" rel="tag">友元函数</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%B3%E5%80%BC/" rel="tag">右值</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AE%B9%E5%99%A8%E7%AE%97%E6%B3%95/" rel="tag">容器算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" rel="tag">数据结构与算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/" rel="tag">智能指针</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BD%AC%E6%8D%A2/" rel="tag">转换</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BF%AD%E4%BB%A3%E5%99%A8/" rel="tag">迭代器</a><span class="tag-list-count">1</span></li></ul>
+                <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Lambda/" rel="tag">Lambda</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/QString/" rel="tag">QString</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Qt/" rel="tag">Qt</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STL/" rel="tag">STL</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Static/" rel="tag">Static</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Template/" rel="tag">Template</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/assign/" rel="tag">assign</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bind/" rel="tag">bind</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/connect/" rel="tag">connect</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/const/" rel="tag">const</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/constexpr/" rel="tag">constexpr</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/explicit/" rel="tag">explicit</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/extern/" rel="tag">extern</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/function/" rel="tag">function</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/initializer-list/" rel="tag">initializer_list</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/move/" rel="tag">move</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/push-bak/" rel="tag">push_bak</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/static-cast/" rel="tag">static_cast</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/string/" rel="tag">string</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tuple/" rel="tag">tuple</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/typedef/" rel="tag">typedef</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/typeid/" rel="tag">typeid</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/using/" rel="tag">using</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vector/" rel="tag">vector</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/" rel="tag">内存分配</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88/" rel="tag">函数指针</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%8B%E5%85%83%E5%87%BD%E6%95%B0/" rel="tag">友元函数</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%B3%E5%80%BC/" rel="tag">右值</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AE%B9%E5%99%A8%E7%AE%97%E6%B3%95/" rel="tag">容器算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" rel="tag">数据结构与算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%97%8B%E8%BD%AC%E5%8F%98%E5%8C%96/" rel="tag">旋转变化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/" rel="tag">智能指针</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BD%AC%E6%8D%A2/" rel="tag">转换</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BF%AD%E4%BB%A3%E5%99%A8/" rel="tag">迭代器</a><span class="tag-list-count">1</span></li></ul>
             </canvas>
          </div>
     </div>
