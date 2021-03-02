@@ -3,9 +3,9 @@
   <entry>
     <title>研究生小知识</title>
     <url>/2021/03/02/%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2/</url>
-    <content><![CDATA[<h3 id="1、二维坐标变换"><a href="#1、二维坐标变换" class="headerlink" title="1、二维坐标变换"></a>1、二维坐标变换</h3><p>假设坐标系<code>XOY</code>经过旋转后的坐标系为<code>X&#39;OY&#39;</code>,旋转角为<code>θ</code>,如图所示，则</p>
+    <content><![CDATA[<h3 id="1、二维坐标变换"><a href="#1、二维坐标变换" class="headerlink" title="1、二维坐标变换"></a>1、二维坐标变换</h3><p>假设坐标系<code>XOY</code>经过旋转后的坐标系为<code>X&#39;OY&#39;</code>,旋转角为<code>θ</code>,如图所示，则<a id="more"></a></p>
 <p><img src="https://zhuom-go.github.io/img/%E6%97%8B%E8%BD%AC%E6%97%B6%E7%9A%84%E5%9B%BE%E7%89%87/XY%E6%97%8B%E8%BD%AC.png" alt="img"></p>
-<p>$x’=x<em>cos(θ)+y</em>sin(θ)$<br>$y’=y<em>cos(θ)-x</em>sin(θ)$</p>
+<p>$$x’=x<em>cos(θ)+y</em>sin(θ)$$<br>$$y’=y<em>cos(θ)-x</em>sin(θ)$$</p>
 <h3 id="2、三维坐标变换"><a href="#2、三维坐标变换" class="headerlink" title="2、三维坐标变换"></a>2、三维坐标变换</h3><h4 id="2-1、绕X轴旋转"><a href="#2-1、绕X轴旋转" class="headerlink" title="2.1、绕X轴旋转"></a>2.1、绕X轴旋转</h4><p>在三维场景中，当一个点P(x,y,z)绕x轴旋转θ角得到点P’(x’,y’,z’)。由于是绕x轴进行的旋转，因此x坐标保持不变，y和z组成的yoz（o是坐标原点）平面上进行的是一个二维的旋转，于是有：</p>
 <p><strong>右手坐标系：</strong></p>
 <p><img src="https://zhuom-go.github.io/img/%E6%97%8B%E8%BD%AC%E6%97%B6%E7%9A%84%E5%9B%BE%E7%89%87/X%E5%8F%B3.png" alt="img"></p>

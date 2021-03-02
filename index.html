@@ -217,7 +217,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-03-02 17:37:44 / 修改时间：17:37:51" itemprop="dateCreated datePublished" datetime="2021-03-02T17:37:44+08:00">2021-03-02</time>
+              <time title="创建时间：2021-03-02 17:37:44 / 修改时间：17:42:08" itemprop="dateCreated datePublished" datetime="2021-03-02T17:37:44+08:00">2021-03-02</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -260,7 +260,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>463</span>
+              <span>467</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -279,25 +279,30 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="1、二维坐标变换"><a href="#1、二维坐标变换" class="headerlink" title="1、二维坐标变换"></a>1、二维坐标变换</h3><p>假设坐标系<code>XOY</code>经过旋转后的坐标系为<code>X&#39;OY&#39;</code>,旋转角为<code>θ</code>,如图所示，则</p>
-<p><img src="https://zhuom-go.github.io/img/%E6%97%8B%E8%BD%AC%E6%97%B6%E7%9A%84%E5%9B%BE%E7%89%87/XY%E6%97%8B%E8%BD%AC.png" alt="img"></p>
-<p>$x’=x<em>cos(θ)+y</em>sin(θ)$<br>$y’=y<em>cos(θ)-x</em>sin(θ)$</p>
-<h3 id="2、三维坐标变换"><a href="#2、三维坐标变换" class="headerlink" title="2、三维坐标变换"></a>2、三维坐标变换</h3><h4 id="2-1、绕X轴旋转"><a href="#2-1、绕X轴旋转" class="headerlink" title="2.1、绕X轴旋转"></a>2.1、绕X轴旋转</h4><p>在三维场景中，当一个点P(x,y,z)绕x轴旋转θ角得到点P’(x’,y’,z’)。由于是绕x轴进行的旋转，因此x坐标保持不变，y和z组成的yoz（o是坐标原点）平面上进行的是一个二维的旋转，于是有：</p>
-<p><strong>右手坐标系：</strong></p>
-<p><img src="https://zhuom-go.github.io/img/%E6%97%8B%E8%BD%AC%E6%97%B6%E7%9A%84%E5%9B%BE%E7%89%87/X%E5%8F%B3.png" alt="img"></p>
-<p><strong>左手坐标系：</strong></p>
-<p><img src="https://zhuom-go.github.io/img/%E6%97%8B%E8%BD%AC%E6%97%B6%E7%9A%84%E5%9B%BE%E7%89%87/X%E5%B7%A6.png" alt="img"></p>
-<h4 id="2-2、绕Y轴旋转"><a href="#2-2、绕Y轴旋转" class="headerlink" title="2.2、绕Y轴旋转"></a>2.2、绕Y轴旋转</h4><p>在三维场景中，当一个点P(x,y,z)绕y轴旋转θ角得到点P’(x’,y’,z’)。由于是绕x轴进行的旋转，因此y坐标保持不变，x和z组成的xoz（o是坐标原点）平面上进行的是一个二维的旋转，于是有：</p>
-<p><strong>右手坐标系：</strong></p>
-<p><img src="https://zhuom-go.github.io/img/%E6%97%8B%E8%BD%AC%E6%97%B6%E7%9A%84%E5%9B%BE%E7%89%87/Y%E5%8F%B3.png" alt="img"></p>
-<p><strong>左手坐标系：</strong></p>
-<p><img src="https://zhuom-go.github.io/img/%E6%97%8B%E8%BD%AC%E6%97%B6%E7%9A%84%E5%9B%BE%E7%89%87/Y%E5%B7%A6.png" alt="img"></p>
-<h4 id="2-3、绕Z轴旋转"><a href="#2-3、绕Z轴旋转" class="headerlink" title="2.3、绕Z轴旋转"></a>2.3、绕Z轴旋转</h4><p>在三维场景中，当一个点P(x,y,z)绕z轴旋转θ角得到点P’(x’,y’,z’)。由于是绕z轴进行的旋转，因此z坐标保持不变，x和y组成的xoy（o是坐标原点）平面上进行的是一个二维的旋转，于是有：</p>
-<p><strong>右手坐标系：</strong></p>
-<p><img src="https://zhuom-go.github.io/img/%E6%97%8B%E8%BD%AC%E6%97%B6%E7%9A%84%E5%9B%BE%E7%89%87/Z%E5%8F%B3.png" alt="img"></p>
-<p><strong>左手坐标系：</strong></p>
-<p><img src="https://zhuom-go.github.io/img/%E6%97%8B%E8%BD%AC%E6%97%B6%E7%9A%84%E5%9B%BE%E7%89%87/Z%E5%B7%A6.png" alt="img"></p>
-
+          <h3 id="1、二维坐标变换"><a href="#1、二维坐标变换" class="headerlink" title="1、二维坐标变换"></a>1、二维坐标变换</h3><p>假设坐标系<code>XOY</code>经过旋转后的坐标系为<code>X&#39;OY&#39;</code>,旋转角为<code>θ</code>,如图所示，则
+          <div class="home-post-tags">
+              <a href="/" rel="tag"></a>
+              <script type="text/javascript">
+              var tagsall=document.getElementsByClassName("home-post-tags")
+              for (var i = tagsall.length - 1; i >= 0; i--){
+                  var tags=tagsall[i].getElementsByTagName("a");
+                  for (var j = tags.length - 1; j >= 0; j--) {
+                      var r=Math.floor(Math.random()*255);
+                      var g=Math.floor(Math.random()*255);
+                      var b=Math.floor(Math.random()*255);
+                      tags[j].style.background = "rgb("+r+","+g+","+b+")";
+                  }
+              }
+              </script>
+          </div>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/03/02/%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
