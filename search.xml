@@ -1,6 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>PLC编程</title>
+    <url>/2021/03/22/PLC/</url>
+    <content><![CDATA[<h3 id="1、双线圈冲突"><a href="#1、双线圈冲突" class="headerlink" title="1、双线圈冲突"></a>1、双线圈冲突</h3><p>在进行PLC编程时，首先要注意的是<strong>双线圈冲突问题</strong>，典型的就是某一个线圈在同一段使用了两次，例如</p>
+<p><img src="https://zhuom-go.github.io/img/PLC/shuangxianquan.jpg" alt="img"></p>
+<p>此时<code>Q0.0</code>在这一段里需要执行两次，如果直接用线圈驱动，此时会被第二次的情况覆盖掉，所以此时需要用一个继电器去替代它。</p>
+<p><img src="https://zhuom-go.github.io/img/PLC/shuangxianquan1.jpg" alt="img"></p>
+<h3 id="2、定时器、接通延时的内部信号冲突"><a href="#2、定时器、接通延时的内部信号冲突" class="headerlink" title="2、定时器、接通延时的内部信号冲突"></a>2、定时器、接通延时的内部信号冲突</h3><p>对于上面这些定时器，不要直接用<code>T1.Q</code>的形式去直接输出，否则可能会由于内部的时间冲突导致混乱，可以用一个中间继电器转换，或者可以的话直接在后面输出。</p>
+<p><img src="https://zhuom-go.github.io/img/PLC/dingshiqi.jpg" alt="image-20210322232500994"></p>
+]]></content>
+      <categories>
+        <category>PLC</category>
+        <category>注意事项</category>
+      </categories>
+      <tags>
+        <tag>PLC</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Effective Modern C++</title>
+    <url>/2021/03/04/Effective%20Modern%20C++/</url>
+    <content><![CDATA[<h3 id="1、型别推导"><a href="#1、型别推导" class="headerlink" title="1、型别推导"></a>1、型别推导</h3><h4 id="条款1-理解模型推导"><a href="#条款1-理解模型推导" class="headerlink" title="条款1.理解模型推导"></a>条款1.理解模型推导</h4><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">(ParamType param)</span></span>;</span><br><span class="line"></span><br><span class="line">f(expr);</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>对于上述代码模式的说明</p>
+</blockquote>
+<p><strong>1、ParamType是指针或引用时（非万能引用）</strong></p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">(T&amp; param)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> x=<span class="number">27</span>;                  <span class="comment">//x是int类型</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> cx=x;            <span class="comment">//cx是const int类型</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span>&amp; rx=x            <span class="comment">//rx是const int的引用</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">char</span> *ptr=<span class="string">&quot;ssss&quot;</span>;</span><br><span class="line">  </span><br><span class="line">f(x);  <span class="comment">//x是int类型，所以推断出来T为int </span></span><br><span class="line">f(cx);  <span class="comment">//cx是const int类型，所以T是const int</span></span><br><span class="line">f(rx);  <span class="comment">//rx是const int&amp;类型,但是在进行类型推断时会忽略形参的引用类型，所以实际T推断推来还是const int</span></span><br><span class="line">f(ptr); <span class="comment">//则会被推断为const char(&amp;)[5]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//当把换成</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">(<span class="keyword">const</span> T&amp; param)</span></span>;</span><br><span class="line"><span class="comment">//会推断出和以前上面一样的结果，x直接为int 所以T也为int,后面两个由于已经带了const，所以会被忽略</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>2、ParamType是万能模板时</strong></p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">(T&amp;&amp; param)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> x=<span class="number">27</span>;                  <span class="comment">//x是int类型</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> cx=x;            <span class="comment">//cx是const int类型</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span>&amp; rx=x            <span class="comment">//rx是const int的引用</span></span><br><span class="line">  </span><br><span class="line">f(x);  <span class="comment">//x是左值，所以T是int &amp;类型，对于param最终还是int &amp;</span></span><br><span class="line">f(cx);  <span class="comment">//同上</span></span><br><span class="line">f(rx);  <span class="comment">//同上</span></span><br><span class="line"></span><br><span class="line">f(<span class="number">27</span>);<span class="comment">//则为右值</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>3、ParamType即非指针也非引用</strong></p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*按值传递*/</span></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">(T param)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> x=<span class="number">27</span>;                  <span class="comment">//x是int类型</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> cx=x;            <span class="comment">//cx是const int类型</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span>&amp; rx=x            <span class="comment">//rx是const int的引用</span></span><br><span class="line">  </span><br><span class="line">f(x);  <span class="comment">//x是按值传递的，所以T推断出来的还是int</span></span><br><span class="line">f(cx);  <span class="comment">//由于此时是按值传递的，是新建了一个新的对象，默认与原对象无关，所以会忽略const，此时还是int类型</span></span><br><span class="line">f(rx);  <span class="comment">//同上，忽略const和左值引用</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//需要注意的是如果传进去的</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">char</span>*<span class="keyword">const</span> ptr=<span class="string">&quot;sss&quot;</span>;</span><br><span class="line"><span class="comment">//则T会被推导为const char *类型，自身的常量性被忽略，与上述规则一样</span></span><br><span class="line"><span class="comment">//所以当类型为const char* ptr时，其推断T也为const char *，只忽略值本身的const</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>总结</p>
+</blockquote>
+<p><strong>1、在模板类型中，具有引用型的实参应用将会被忽略</strong></p>
+<p>2、对于万能引用的实参，左值会特殊推导</p>
+<p>3、按值传递时，值本身的<code>const</code>会被忽略</p>
+<p>4、在模板推导时，数组或者函数会退化成指针</p>
+]]></content>
+      <categories>
+        <category>C++</category>
+        <category>常规语法</category>
+      </categories>
+      <tags>
+        <tag>Effective Modern C++</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>研究生小知识</title>
     <url>/2021/03/02/%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2/</url>
     <content><![CDATA[<h3 id="1、二维坐标变换"><a href="#1、二维坐标变换" class="headerlink" title="1、二维坐标变换"></a>1、二维坐标变换</h3><p>假设坐标系<code>XOY</code>经过旋转后的坐标系为<code>X&#39;OY&#39;</code>,旋转角为<code>θ</code>,如图所示，则<a id="more"></a></p>
