@@ -7,8 +7,17 @@
 <p><img src="https://zhuom-go.github.io/img/PLC/shuangxianquan.jpg" alt="img"></p>
 <p>此时<code>Q0.0</code>在这一段里需要执行两次，如果直接用线圈驱动，此时会被第二次的情况覆盖掉，所以此时需要用一个继电器去替代它。</p>
 <p><img src="https://zhuom-go.github.io/img/PLC/jjff.jpg" alt="image-20210322232500994"></p>
+<p><strong>此外还要特别注意线圈是否在别的地方使用，防止线圈使用冲突</strong></p>
 <h3 id="2、定时器、接通延时的内部信号冲突"><a href="#2、定时器、接通延时的内部信号冲突" class="headerlink" title="2、定时器、接通延时的内部信号冲突"></a>2、定时器、接通延时的内部信号冲突</h3><p>对于上面这些定时器，不要直接用<code>T1.Q</code>的形式去直接输出，否则可能会由于内部的时间冲突导致混乱，可以用一个中间继电器转换，或者可以的话直接在后面输出。</p>
 <p><img src="https://zhuom-go.github.io/img/PLC/dingshiqi.jpg" alt="image-20210322232500994"></p>
+<h3 id="3、判断电路"><a href="#3、判断电路" class="headerlink" title="3、判断电路"></a>3、判断电路</h3><p><img src="https://zhuom-go.github.io/img/PLC/PLC_if.jpg" alt="img"></p>
+<p>通过判断某个输出的状态进行一些动作，如果进行单一动作，还可以用以下的异或电路实现</p>
+<p><img src="https://zhuom-go.github.io/img/PLC/yhdl.jpg" alt="img"></p>
+<h3 id="4、西门子内存数据结构"><a href="#4、西门子内存数据结构" class="headerlink" title="4、西门子内存数据结构"></a>4、西门子内存数据结构</h3><p><img src="https://zhuom-go.github.io/img/PLC/neicun.jpg" alt="img"></p>
+<p>1、西门子的<strong>字节存放是由左往右排的</strong>，和普通的相反；</p>
+<p>2、<strong>西门子的位在某个字节中又是从右往左排的</strong>；</p>
+<p>3、<strong>在一个双字里面，高位是IW0，低位是IW2，而不是IW1；</strong></p>
+<h3 id="5、西门子的字符格式"><a href="#5、西门子的字符格式" class="headerlink" title="5、西门子的字符格式"></a>5、西门子的字符格式</h3><p><img src="https://zhuom-go.github.io/img/PLC/%E5%AD%97%E7%AC%A6%E6%A0%BC%E5%BC%8F.jpg" alt="img"></p>
 ]]></content>
       <categories>
         <category>PLC</category>
