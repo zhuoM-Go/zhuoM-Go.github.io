@@ -192,6 +192,258 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/14/QT%E7%BB%98%E5%9B%BE%E4%BA%8B%E4%BB%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/Logo.png">
+      <meta itemprop="name" content="zhuoM">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="笔记杂货铺">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/05/14/QT%E7%BB%98%E5%9B%BE%E4%BA%8B%E4%BB%B6/" class="post-title-link" itemprop="url">Qt绘图事件</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-05-14 21:01:51 / 修改时间：22:09:48" itemprop="dateCreated datePublished" datetime="2021-05-14T21:01:51+08:00">2021-05-14</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Qt/" itemprop="url" rel="index"><span itemprop="name">Qt</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Qt/%E7%BB%98%E5%9B%BE/" itemprop="url" rel="index"><span itemprop="name">绘图</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2021/05/14/QT%E7%BB%98%E5%9B%BE%E4%BA%8B%E4%BB%B6/" class="post-meta-item leancloud_visitors" data-flag-title="Qt绘图事件" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/05/14/QT%E7%BB%98%E5%9B%BE%E4%BA%8B%E4%BB%B6/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/05/14/QT%E7%BB%98%E5%9B%BE%E4%BA%8B%E4%BB%B6/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>451</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="1、QPainter"><a href="#1、QPainter" class="headerlink" title="1、QPainter"></a>1、QPainter</h3><p>在主窗口绘图时，需要绘制在绘图事件<code>paintEvent</code>里面，使用方法为</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//重写paintEvent</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">paintEvent</span><span class="params">(QpaintEvent *)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="function">QPainter <span class="title">p</span><span class="params">(<span class="keyword">this</span>)</span></span>;<span class="comment">//指定绘图的对象</span></span><br><span class="line">  <span class="comment">/* 也可以这样</span></span><br><span class="line"><span class="comment">  QPainter p;</span></span><br><span class="line"><span class="comment">  p.begin(this);</span></span><br><span class="line"><span class="comment">  .</span></span><br><span class="line"><span class="comment">  .</span></span><br><span class="line"><span class="comment">  .</span></span><br><span class="line"><span class="comment">  p.end();*/</span></span><br><span class="line">  p.drawPixmap(..); <span class="comment">//绘制背景图片,里面可以填充二进制图片显示QBitmap</span></span><br><span class="line">  p.drawLine(...);<span class="comment">//绘制直线</span></span><br><span class="line">  <span class="comment">//对于画家还可以setPen和setBrush，分别为画的对象改变线条样式和填充样式</span></span><br><span class="line">  </span><br><span class="line">  <span class="comment">//update()可以手动调用paintEvent();</span></span><br><span class="line">     </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2、QPixmap、QImage和QPicture的区别"><a href="#2、QPixmap、QImage和QPicture的区别" class="headerlink" title="2、QPixmap、QImage和QPicture的区别"></a>2、QPixmap、QImage和QPicture的区别</h3><p><code>QPixmap</code>主要是针对了窗口进行了优化，和平台有关，但是不能更改图片</p>
+<p><code>QImage</code>和平台无关，可以对图片进行修改，并可在<strong>线程</strong>中使用</p>
+<p><code>QPicture</code>主要用于以二进制的方式存储图片</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/29/Qt%E6%A0%B7%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/Logo.png">
+      <meta itemprop="name" content="zhuoM">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="笔记杂货铺">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/29/Qt%E6%A0%B7%E5%BC%8F/" class="post-title-link" itemprop="url">Qt样式</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-04-29 19:40:19" itemprop="dateCreated datePublished" datetime="2021-04-29T19:40:19+08:00">2021-04-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-05-13 17:47:02" itemprop="dateModified" datetime="2021-05-13T17:47:02+08:00">2021-05-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Qt/" itemprop="url" rel="index"><span itemprop="name">Qt</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Qt/%E5%B8%B8%E8%A7%84%E8%AF%AD%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">常规语法</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2021/04/29/Qt%E6%A0%B7%E5%BC%8F/" class="post-meta-item leancloud_visitors" data-flag-title="Qt样式" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/04/29/Qt%E6%A0%B7%E5%BC%8F/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/04/29/Qt%E6%A0%B7%E5%BC%8F/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="1、Font字体样式"><a href="#1、Font字体样式" class="headerlink" title="1、Font字体样式"></a>1、Font字体样式</h4><p>字体大小：<code>font-size：</code>，<code>x-large</code>为特大，<code>xx-small</code>为特小,一般可直接使用数字，单位是<code>px</code>和<code>pd</code><br>样式：<code>font-style：</code>，<code>oblique</code>为偏斜体,<code>italic</code>为斜体,<code>normal</code>为正常<br>粗细：<code>font-weight：</code>，<code>bold</code>为粗体，<code>lighter</code>为细体,<code>normal</code>为正常<br>大小写：<code>text-transform:</code>，<code>capitalize</code>为首字母大写，<code>uppercase</code>为大写，<code>lowercase</code>为小写，<code>none</code>无<br>修饰：<code>text-decoration:</code>，<code>underline</code>为下划线，<code>overline</code>为上划线，<code>line-through</code>为删除线，<code>blink</code>为闪烁<br>字体：<code>font-family:</code>，<code>Courier New</code>, <code>Courier</code>, <code>monospace</code>, <code>Times New Roman</code>, <code>Times</code>, <code>serif</code>, <code>Arial</code>, <code>Helvetica</code>, <code>sans-serif</code>, <code>Verdana</code><br>行高：<code>line-height:</code>，<code>normal</code>为正常，可以用数字,单位为<code>px,pd,em</code></p>
+<h4 id="2、background背景样式"><a href="#2、background背景样式" class="headerlink" title="2、background背景样式"></a>2、background背景样式</h4><p>背景颜色：<code>background-color:</code>，直接填颜色<br>背景图片：<code>backgound-image:url()</code>，填图片路径，但是<strong>通常使用</strong><code>border-image:url()</code>，这样的图片显示可以自适应  </p>
+<h4 id="3、伪状态显示"><a href="#3、伪状态显示" class="headerlink" title="3、伪状态显示"></a>3、伪状态显示</h4><p> 部件的外观可以按照用户界面元素状态的不同来分别定义，这在样式表中被称为“伪状态”。例如，如果我们想在一个<code>pushbutton</code>在被按下的时候具有不一样的外观，我们可以指定一个叫做 <code>:pressed</code> 的伪状态。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">QPushButton &#123;</span><br><span class="line">   border: <span class="number">2</span>px outset green; <span class="comment">//普通状态</span></span><br><span class="line">   background: gray;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> QPushButton:pressed &#123;</span><br><span class="line">   border-style: inset;  <span class="comment">//按下时的状态</span></span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>下面是可用的伪状态列表：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//伪状态  描述</span></span><br><span class="line">:checked  <span class="comment">//button部件被选中</span></span><br><span class="line">:disabled  <span class="comment">//部件被禁用</span></span><br><span class="line">:enabled  <span class="comment">//部件被启用</span></span><br><span class="line">:focus  <span class="comment">//部件获得焦点</span></span><br><span class="line">:hover  <span class="comment">//鼠标位于部件上</span></span><br><span class="line">:indeterminate  <span class="comment">//checkbox或radiobutton被部分选中</span></span><br><span class="line">:off  <span class="comment">//部件可以切换，且处于off状态</span></span><br><span class="line">:on  <span class="comment">//部件可以切换，且处于on状态</span></span><br><span class="line">:pressed  <span class="comment">//部件被鼠标按下</span></span><br><span class="line">:unchecked  <span class="comment">//button部件未被选中</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="4、使用子部件定义微观样式"><a href="#4、使用子部件定义微观样式" class="headerlink" title="4、使用子部件定义微观样式"></a>4、使用子部件定义微观样式</h4><p> 许多部件都包含有子元素，这些元素可以称为“子部件”。<code>Spinbox</code>的上下箭头就是子部件最好的例子。<br> 子部件可以通过<code>::</code>来指定，例如<code>QDateTimeEdit::up-button</code>。定义子部件的样式与定义部件非常相似，它们遵循前面提到的方箱模型（即它们可以拥有自己的边框、背景等），并且也可以和伪状态联合使用（例如<code>QSpinBox::up-button:hover</code>）。</p>
+<p> 下表列出了可用的子部件类型：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">子部件  描述</span><br><span class="line">::down-arrow  <span class="comment">//combobox或spinbox的下拉箭头</span></span><br><span class="line">::down-button  <span class="comment">//spinbox的向下按钮</span></span><br><span class="line">::drop-down  <span class="comment">//combobox的下拉箭头</span></span><br><span class="line">::indicator  <span class="comment">//checkbox、radio button或可选择groupbox的指示器</span></span><br><span class="line">::item  <span class="comment">//menu、menubar或status bar的子项目</span></span><br><span class="line">::menu-indicator  <span class="comment">//pushbutton的菜单指示器</span></span><br><span class="line">::title  <span class="comment">//groupbox的标题</span></span><br><span class="line">::up-arrow  <span class="comment">//spinbox的向上箭头</span></span><br><span class="line">::up-button  <span class="comment">//spinbox的向上按钮</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="5、位置固定"><a href="#5、位置固定" class="headerlink" title="5、位置固定"></a>5、位置固定</h4><p> 通过指定<code>subcontrol-position</code>和<code>subcontrol-origin</code>属性，子部件可以被放置在部件箱体内的任何位置。并且，子部件的位置还可以使用相对或绝对的方式进一步的调整。具体选择何种调整方式取决于子部件具有固定的大小，还是会随着父部件而变化。</p>
+<p> <strong>5.1. 相对定位</strong></p>
+<p>  相对定位适合于子部件具有固定大小的情形（通过width和height指定子部件大小）。使用这种方式，子部件可以以相对于<code>subcontrol-position</code>和 <code>subcontrol-origin</code>属性定义的原始位置进行移动调整。使用<code>left</code>属性可以把子部件向右移，<code>top</code>属性可以把子部件向左移。</p>
+<p> 例如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">QPushButton::menu-indicator &#123;</span><br><span class="line">  image: url(menu_indicator.png);</span><br><span class="line">  width: <span class="number">13</span>px;</span><br><span class="line">  height: <span class="number">13</span>px;</span><br><span class="line"></span><br><span class="line">  subcontrol-origin: padding;</span><br><span class="line">  subcontrol-position: bottom right;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> 当按下按钮时，我们可以把菜单指示器从原来的位置向右下方移动几个像素来模拟按钮按下的状态。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">QPushButton::menu-indicator:pressed &#123;</span><br><span class="line">  position: relative;</span><br><span class="line">  top: <span class="number">2</span>px;</span><br><span class="line">  left: <span class="number">2</span>px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> <strong>5.2. 绝对定位</strong></p>
+<p> 绝对定位适合于子部件的位置随父部件的变化而变的情形。与前面的例子相同，<code>subcontrol-origin</code>定义了父部件箱体的参考矩形。子部件的矩形区域则可以随后通过相对于这个参考矩形四边的偏移量来定义。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">QPushButton::menu-indicator &#123;</span><br><span class="line">  border: 2px solid red;</span><br><span class="line"></span><br><span class="line">  subcontrol-origin: padding;</span><br><span class="line">  position: absolute;</span><br><span class="line">  top: 2px;</span><br><span class="line">  right: 2px;</span><br><span class="line">  bottom: 2px;</span><br><span class="line">  left: 40px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> 对于宽度或高度固定的子部件，subcontrol-position被用来说明其在subcontrol-origin指定矩形内的对其方式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">QPushButton::menu-indicator &#123;</span><br><span class="line">  image: url(menu_indicator.png);</span><br><span class="line">  width: 13px;</span><br><span class="line"></span><br><span class="line">  subcontrol-origin: padding;</span><br><span class="line">  subcontrol-position: bottom right;</span><br><span class="line">  position: absolute;</span><br><span class="line">  top: 2px;</span><br><span class="line">  bottom: 2px;</span><br><span class="line">  right: 2px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/22/PLC/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -223,7 +475,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-31 21:51:12" itemprop="dateModified" datetime="2021-03-31T21:51:12+08:00">2021-03-31</time>
+                <time title="修改时间：2021-04-01 15:02:54" itemprop="dateModified" datetime="2021-04-01T15:02:54+08:00">2021-04-01</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -620,7 +872,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-02 10:48:18" itemprop="dateModified" datetime="2021-03-02T10:48:18+08:00">2021-03-02</time>
+                <time title="修改时间：2021-05-14 20:12:07" itemprop="dateModified" datetime="2021-05-14T20:12:07+08:00">2021-05-14</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -663,14 +915,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>12k</span>
+              <span>13k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>11 分钟</span>
+              <span>12 分钟</span>
             </span>
 
         </div>
@@ -1124,7 +1376,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2020/11/20/Qt%E6%A7%BD%E5%87%BD%E6%95%B0%E7%BB%91%E5%AE%9A/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/11/20/Qt%E4%BA%8B%E4%BB%B6%E4%B8%8E%E6%A7%BD%E5%87%BD%E6%95%B0%E7%BB%91%E5%AE%9A/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/img/Logo.png">
@@ -1138,7 +1390,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/11/20/Qt%E6%A7%BD%E5%87%BD%E6%95%B0%E7%BB%91%E5%AE%9A/" class="post-title-link" itemprop="url">Qt槽函数使用Lambda绑定</a>
+            <a href="/2020/11/20/Qt%E4%BA%8B%E4%BB%B6%E4%B8%8E%E6%A7%BD%E5%87%BD%E6%95%B0%E7%BB%91%E5%AE%9A/" class="post-title-link" itemprop="url">QT事件与槽函数绑定</a>
         </h2>
 
         <div class="post-meta">
@@ -1155,7 +1407,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-27 09:30:46" itemprop="dateModified" datetime="2020-11-27T09:30:46+08:00">2020-11-27</time>
+                <time title="修改时间：2021-05-13 21:48:32" itemprop="dateModified" datetime="2021-05-13T21:48:32+08:00">2021-05-13</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1172,7 +1424,7 @@
             </span>
 
           
-            <span id="/2020/11/20/Qt%E6%A7%BD%E5%87%BD%E6%95%B0%E7%BB%91%E5%AE%9A/" class="post-meta-item leancloud_visitors" data-flag-title="Qt槽函数使用Lambda绑定" title="阅读次数">
+            <span id="/2020/11/20/Qt%E4%BA%8B%E4%BB%B6%E4%B8%8E%E6%A7%BD%E5%87%BD%E6%95%B0%E7%BB%91%E5%AE%9A/" class="post-meta-item leancloud_visitors" data-flag-title="QT事件与槽函数绑定" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -1187,8 +1439,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2020/11/20/Qt%E6%A7%BD%E5%87%BD%E6%95%B0%E7%BB%91%E5%AE%9A/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/11/20/Qt%E6%A7%BD%E5%87%BD%E6%95%B0%E7%BB%91%E5%AE%9A/" itemprop="commentCount"></span>
+    <a title="valine" href="/2020/11/20/Qt%E4%BA%8B%E4%BB%B6%E4%B8%8E%E6%A7%BD%E5%87%BD%E6%95%B0%E7%BB%91%E5%AE%9A/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/11/20/Qt%E4%BA%8B%E4%BB%B6%E4%B8%8E%E6%A7%BD%E5%87%BD%E6%95%B0%E7%BB%91%E5%AE%9A/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -1198,14 +1450,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>824</span>
+              <span>2.4k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>2 分钟</span>
             </span>
 
         </div>
@@ -1236,279 +1488,7 @@
           </div>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2020/11/20/Qt%E6%A7%BD%E5%87%BD%E6%95%B0%E7%BB%91%E5%AE%9A/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2020/11/18/%E6%A8%A1%E6%9D%BF%E4%B8%8E%E6%B3%9B%E5%9E%8B%E7%BC%96%E7%A8%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/img/Logo.png">
-      <meta itemprop="name" content="zhuoM">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="笔记杂货铺">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/11/18/%E6%A8%A1%E6%9D%BF%E4%B8%8E%E6%B3%9B%E5%9E%8B%E7%BC%96%E7%A8%8B/" class="post-title-link" itemprop="url">模板与泛型编程</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-11-18 22:32:25" itemprop="dateCreated datePublished" datetime="2020-11-18T22:32:25+08:00">2020-11-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-23 16:17:35" itemprop="dateModified" datetime="2020-11-23T16:17:35+08:00">2020-11-23</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/STL/" itemprop="url" rel="index"><span itemprop="name">STL</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2020/11/18/%E6%A8%A1%E6%9D%BF%E4%B8%8E%E6%B3%9B%E5%9E%8B%E7%BC%96%E7%A8%8B/" class="post-meta-item leancloud_visitors" data-flag-title="模板与泛型编程" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/11/18/%E6%A8%A1%E6%9D%BF%E4%B8%8E%E6%B3%9B%E5%9E%8B%E7%BC%96%E7%A8%8B/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/11/18/%E6%A8%A1%E6%9D%BF%E4%B8%8E%E6%B3%9B%E5%9E%8B%E7%BC%96%E7%A8%8B/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>25k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>22 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>面向对象编程和泛型编程都能处理编写程序时不知道类型的情况</p>
-<p>区别就是OOP是在运行时处理，而泛型编程是在编译的时候就能知道类型了
-          <div class="home-post-tags">
-              <a href="/" rel="tag"></a>
-              <a href="/" rel="tag"></a>
-              <script type="text/javascript">
-              var tagsall=document.getElementsByClassName("home-post-tags")
-              for (var i = tagsall.length - 1; i >= 0; i--){
-                  var tags=tagsall[i].getElementsByTagName("a");
-                  for (var j = tags.length - 1; j >= 0; j--) {
-                      var r=Math.floor(Math.random()*255);
-                      var g=Math.floor(Math.random()*255);
-                      var b=Math.floor(Math.random()*255);
-                      tags[j].style.background = "rgb("+r+","+g+","+b+")";
-                  }
-              }
-              </script>
-          </div>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/11/18/%E6%A8%A1%E6%9D%BF%E4%B8%8E%E6%B3%9B%E5%9E%8B%E7%BC%96%E7%A8%8B/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2020/11/18/C++%E4%B8%ADStatic%E4%BD%9C%E7%94%A8%E5%92%8C%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/img/Logo.png">
-      <meta itemprop="name" content="zhuoM">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="笔记杂货铺">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/11/18/C++%E4%B8%ADStatic%E4%BD%9C%E7%94%A8%E5%92%8C%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">C++中Static作用和使用方法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-11-18 19:41:54" itemprop="dateCreated datePublished" datetime="2020-11-18T19:41:54+08:00">2020-11-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-25 20:10:48" itemprop="dateModified" datetime="2020-11-25T20:10:48+08:00">2020-11-25</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/%E5%B8%B8%E8%A7%84%E8%AF%AD%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">常规语法</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2020/11/18/C++%E4%B8%ADStatic%E4%BD%9C%E7%94%A8%E5%92%8C%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/" class="post-meta-item leancloud_visitors" data-flag-title="C++中Static作用和使用方法" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/11/18/C++%E4%B8%ADStatic%E4%BD%9C%E7%94%A8%E5%92%8C%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/11/18/C++%E4%B8%ADStatic%E4%BD%9C%E7%94%A8%E5%92%8C%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>5.9k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>5 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="1、什么是static"><a href="#1、什么是static" class="headerlink" title="1、什么是static?"></a>1、什么是static?</h3><p>​    static 是C++中很常用的修饰符，它被用来控制变量的存储方式和可见性。</p>
-          <div class="home-post-tags">
-              <a href="/" rel="tag"></a>
-              <script type="text/javascript">
-              var tagsall=document.getElementsByClassName("home-post-tags")
-              for (var i = tagsall.length - 1; i >= 0; i--){
-                  var tags=tagsall[i].getElementsByTagName("a");
-                  for (var j = tags.length - 1; j >= 0; j--) {
-                      var r=Math.floor(Math.random()*255);
-                      var g=Math.floor(Math.random()*255);
-                      var b=Math.floor(Math.random()*255);
-                      tags[j].style.background = "rgb("+r+","+g+","+b+")";
-                  }
-              }
-              </script>
-          </div>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/11/18/C++%E4%B8%ADStatic%E4%BD%9C%E7%94%A8%E5%92%8C%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/#more" rel="contents">
+              <a class="btn" href="/2020/11/20/Qt%E4%BA%8B%E4%BB%B6%E4%B8%8E%E6%A7%BD%E5%87%BD%E6%95%B0%E7%BB%91%E5%AE%9A/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1531,7 +1511,7 @@
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1599,20 +1579,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-count">32</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">36</span>
+        <span class="site-state-item-count">37</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1895,7 +1875,7 @@ if(canvas.getContext){
         <h3 class="widget-title"></h3>
         <div id="myCanvasContainer" class="widget tagcloud">
             <canvas width="250" height="250" id="resCanvas" style="width=100%">
-                <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Effective-Modern-C/" rel="tag">Effective Modern C++</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Lambda/" rel="tag">Lambda</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PLC/" rel="tag">PLC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/QString/" rel="tag">QString</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Qt/" rel="tag">Qt</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STL/" rel="tag">STL</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Static/" rel="tag">Static</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Template/" rel="tag">Template</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/assign/" rel="tag">assign</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bind/" rel="tag">bind</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/connect/" rel="tag">connect</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/const/" rel="tag">const</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/constexpr/" rel="tag">constexpr</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/explicit/" rel="tag">explicit</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/extern/" rel="tag">extern</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/function/" rel="tag">function</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/initializer-list/" rel="tag">initializer_list</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/move/" rel="tag">move</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/push-bak/" rel="tag">push_bak</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/static-cast/" rel="tag">static_cast</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/string/" rel="tag">string</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tuple/" rel="tag">tuple</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/typedef/" rel="tag">typedef</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/typeid/" rel="tag">typeid</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/using/" rel="tag">using</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vector/" rel="tag">vector</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/" rel="tag">内存分配</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88/" rel="tag">函数指针</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%8B%E5%85%83%E5%87%BD%E6%95%B0/" rel="tag">友元函数</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%B3%E5%80%BC/" rel="tag">右值</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AE%B9%E5%99%A8%E7%AE%97%E6%B3%95/" rel="tag">容器算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" rel="tag">数据结构与算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%97%8B%E8%BD%AC%E5%8F%98%E5%8C%96/" rel="tag">旋转变化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/" rel="tag">智能指针</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BD%AC%E6%8D%A2/" rel="tag">转换</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BF%AD%E4%BB%A3%E5%99%A8/" rel="tag">迭代器</a><span class="tag-list-count">1</span></li></ul>
+                <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Effective-Modern-C/" rel="tag">Effective Modern C++</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Lambda/" rel="tag">Lambda</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PLC/" rel="tag">PLC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/QString/" rel="tag">QString</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Qt/" rel="tag">Qt</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STL/" rel="tag">STL</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Static/" rel="tag">Static</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Template/" rel="tag">Template</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/assign/" rel="tag">assign</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bind/" rel="tag">bind</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/connect/" rel="tag">connect</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/const/" rel="tag">const</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/constexpr/" rel="tag">constexpr</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/explicit/" rel="tag">explicit</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/extern/" rel="tag">extern</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/function/" rel="tag">function</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/initializer-list/" rel="tag">initializer_list</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/move/" rel="tag">move</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/push-bak/" rel="tag">push_bak</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/static-cast/" rel="tag">static_cast</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/string/" rel="tag">string</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tuple/" rel="tag">tuple</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/typedef/" rel="tag">typedef</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/typeid/" rel="tag">typeid</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/using/" rel="tag">using</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vector/" rel="tag">vector</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/" rel="tag">内存分配</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88/" rel="tag">函数指针</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%8B%E5%85%83%E5%87%BD%E6%95%B0/" rel="tag">友元函数</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%B3%E5%80%BC/" rel="tag">右值</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AE%B9%E5%99%A8%E7%AE%97%E6%B3%95/" rel="tag">容器算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" rel="tag">数据结构与算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%97%8B%E8%BD%AC%E5%8F%98%E5%8C%96/" rel="tag">旋转变化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/" rel="tag">智能指针</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%B7%E5%BC%8F/" rel="tag">样式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BD%AC%E6%8D%A2/" rel="tag">转换</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BF%AD%E4%BB%A3%E5%99%A8/" rel="tag">迭代器</a><span class="tag-list-count">1</span></li></ul>
             </canvas>
          </div>
     </div>
@@ -1928,13 +1908,13 @@ if(canvas.getContext){
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">158k</span>
+    <span title="站点总字数">164k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">2:24</span>
+    <span title="站点阅读时长">2:29</span>
 </div>
 
         
