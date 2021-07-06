@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>QT事件与槽函数绑定</title>
+    <url>/2021/05/17/QT%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1/</url>
+    <content><![CDATA[<h3 id="1、TCP通信流程"><a href="#1、TCP通信流程" class="headerlink" title="1、TCP通信流程"></a>1、TCP通信流程</h3><p><strong>服务器：</strong>服务器首先建立<code>QTcpSever</code>的监听套接字，然后启动<code>listen</code>进行监听，当监听到客户端请求何其建立连接时，会触发<code>newconnection</code>这个信号，表示客户端和服务器建立连接，此时再利用服务器的<code>nextPendingConnection()</code>获取通信套接字<code>QTcpSocket</code>,可以<code>peerAddress（）</code>和<code>peerPort()</code>获取客户端的IP和端口号。然后利用<code>write()</code>函数发送数据，并且绑定<code>readRead</code>信号，当客户端发送数据时，将会触发该信号进行读取。</p>
+<p><strong>客户端：</strong>客户端首先创建<code>QTcpSocket</code>通信套接字，在使用<code>connectTohost</code>连接到服务器，连接成功时将会接通<code>connected</code>这个信号，断开连接时将会接通<code>disconnected</code>这个信号，然后利用<code>write()</code>函数发送数据，并且绑定<code>readRead</code>信号，当服务器发送数据时，将会触发该信号进行读取。</p>
+<p><img src="https://zhuom-go.github.io/img/%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1/tcp%E9%80%9A%E8%AE%AF%E6%B5%81%E7%A8%8B.jpg" alt="img"></p>
+<h3 id="2、UDP通信流程"><a href="#2、UDP通信流程" class="headerlink" title="2、UDP通信流程"></a>2、UDP通信流程</h3><p><strong>服务器：</strong>服务器直接创建<code>QUdpSocket</code>套接字，然后利用<code>bind()</code>绑定端口号，就可以进行读写操作了，当客户端发送数据时还是触发<code>readyRead()</code>这个信号，读写函数使用<code>readDatagram</code>和<code>writeDatagram</code></p>
+<p><strong>客户端：</strong>客户端首先创建<code>QUdpSocket</code>通信套接字，然后既可进行读写操作。</p>
+<p>**组播:**当多个客户端想同时向服务器发送数据时，服务器可以进行组播，使用<code>bind(QHostAddress::AnyIPV4,8888)</code>绑定<code>IPV4</code>的端口号，在加入组播地址既可，（地址需为D类地址）<code>joinMulticastGroup(QHostAddress(&quot;224.0.0.2&quot;))</code>；此时将可以实现多个客户端向其发送数据</p>
+<p><img src="https://zhuom-go.github.io/img/%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1/udp%E9%80%9A%E8%AE%AF%E6%B5%81%E7%A8%8B.jpg" alt="img"></p>
+<h3 id="3、注意事项"><a href="#3、注意事项" class="headerlink" title="3、注意事项"></a>3、注意事项</h3><p>1、<code>UDP</code>与<code>TCP</code>相比少了监听的步骤，所以客户端不必连接<br>2、<code>TCP</code>是服务器直接监听<code>ip</code>和端口号，所以所有的客户端只要连接到服务器，然后读写就可以正常进行；而<code>UDP</code>的是单独的通讯，理论上都可以作为服务器，所以服务器在进行发送时，需要知道对方的端口号和<code>ip</code>地址。<br>3、**<code>TCP</code>通讯会有黏包的问题，**可以使用延时来解决；</p>
+]]></content>
+      <categories>
+        <category>Qt</category>
+      </categories>
+  </entry>
+  <entry>
     <title>Qt绘图事件</title>
     <url>/2021/05/14/QT%E7%BB%98%E5%9B%BE%E4%BA%8B%E4%BB%B6/</url>
     <content><![CDATA[<h3 id="1、QPainter"><a href="#1、QPainter" class="headerlink" title="1、QPainter"></a>1、QPainter</h3><p>在主窗口绘图时，需要绘制在绘图事件<code>paintEvent</code>里面，使用方法为</p>
