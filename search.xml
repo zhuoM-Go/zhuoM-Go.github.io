@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>QT事件与槽函数绑定</title>
+    <title>QT网络通信</title>
     <url>/2021/05/17/QT%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1/</url>
     <content><![CDATA[<h3 id="1、TCP通信流程"><a href="#1、TCP通信流程" class="headerlink" title="1、TCP通信流程"></a>1、TCP通信流程</h3><p><strong>服务器：</strong>服务器首先建立<code>QTcpSever</code>的监听套接字，然后启动<code>listen</code>进行监听，当监听到客户端请求何其建立连接时，会触发<code>newconnection</code>这个信号，表示客户端和服务器建立连接，此时再利用服务器的<code>nextPendingConnection()</code>获取通信套接字<code>QTcpSocket</code>,可以<code>peerAddress（）</code>和<code>peerPort()</code>获取客户端的IP和端口号。然后利用<code>write()</code>函数发送数据，并且绑定<code>readRead</code>信号，当客户端发送数据时，将会触发该信号进行读取。</p>
 <p><strong>客户端：</strong>客户端首先创建<code>QTcpSocket</code>通信套接字，在使用<code>connectTohost</code>连接到服务器，连接成功时将会接通<code>connected</code>这个信号，断开连接时将会接通<code>disconnected</code>这个信号，然后利用<code>write()</code>函数发送数据，并且绑定<code>readRead</code>信号，当服务器发送数据时，将会触发该信号进行读取。</p>
